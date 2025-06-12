@@ -1,0 +1,176 @@
+:root {
+            --sidebar-width: 222px;
+            --topbar-height: 50px;
+            --primary-color: rgb(2, 2, 77);
+            --secondary-color: rgb(6, 4, 46);
+            --tertiary-color: rgb(0, 123, 255);
+            --cuarto-color:rgb(0, 102, 204);
+            --quinto-color:rgb(108, 117, 125);
+        }
+
+
+/*Modal registrar*/
+#modalRegistrar .modal-dialog {
+    /*max-width: 50%;           /* Ancho máximo del modal */
+    margin: 1.75rem auto;       /* Espaciado vertical centrado */
+}
+
+
+/*Modal registrar color del fondo*/
+#modalRegistrar .modal-content {
+    background-color: white;  /* Color de fondo claro */
+    border-radius: 10px;        /* Bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Sombra elegante */
+}
+
+/*Modal registar propiedades encabezado*/
+#modalRegistrar .modal-header {
+    background-color: white;
+    color: var(--primary-color);
+    border-bottom: 1px solid #dee2e6;
+}
+
+#modalRegistrar .modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#modalRegistrar .modal-body {
+    padding: 20px;
+}
+
+/*Linea divisoria del footer del modal registrar*/
+#modalRegistrar .modal-footer {
+    border-top: px solid #576674;
+    padding: 15px;
+}
+
+
+/*Boton cancelar modal registrar*/
+#modalRegistrar .btn-secondary {
+    background-color: var(--quinto-color);
+    border-color: var(--quinto-color);
+}
+
+/*Boton crear modal registrar*/
+#modalRegistrar .btn-primary {
+    background-color: var(--cuarto-color);
+    border-color: var(--cuarto-color);
+}
+#modalEditar .modal-dialog{
+    max-width: 100%;           /* Ancho máximo del modal */
+    margin: 1.75rem auto;
+}
+/*Boton crear modal editar*/
+#modalEditar .btn-primary {
+    background-color: var(--cuarto-color);
+    border-color: var(--cuarto-color);
+}
+
+
+/* Propiedades del texto lista de usuarios*/
+
+.list-usuario{
+    color:var(--primary-color);
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 30px;
+    margin-bottom: 0%;
+}
+
+table.dataTable th {
+    background-color: var(--primary-color); /* Cambia el color del texto del encabezado de la tabla*/
+}
+
+table.dataTable th {
+    color: rgb(255, 255, 255); /* Cambia el color del texto en del encabezado */
+}
+
+/* Bloque para caracteristicas de opciones de paginacion*/
+.page-link {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    cursor: pointer !important;
+}
+
+
+.page-link:hover {
+    background-color: var(--cuarto-color) !important; /* Color en hover, ajustable */
+}
+
+
+.page-link:focus,
+.page-link:active {
+    background-color: var(--cuarto-color) !important;
+}
+
+
+.btn-crear-usuario {
+    position: relative;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    padding: 10px 20px;
+    border: none;
+    margin-left: -14px;
+    top: 40px;
+}
+
+
+
+.btn-crear-usuario:hover {
+    background-color: #0066cc;       /* Color al pasar el mouse */
+}
+
+
+
+/*hacer qu ela tabla se mueva a medida que se desplaza a la izquierda*/
+
+
+.card {
+    width: 80%;
+    margin-top: 2%;
+    margin-left: auto; /* Centrada por defecto */
+    margin-right: auto;
+    transition: margin-left 0.3s ease;
+}
+
+#eyeIconSpan {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+}
+
+#eyeIconSpan:hover {
+    color: #6f6f6f; /* Cambia color al pasar el mouse */
+}
+
+/* A medida que la pantalla se reduce, mueve hacia la izquierda */
+@media (max-width: 992px) {
+    .card {
+        margin-left: 10%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin-left: 5%;
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.asterisco-rojo{
+    color: red;
+    font-weight: bold;
+}
+

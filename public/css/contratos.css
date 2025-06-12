@@ -1,0 +1,60 @@
+.container{
+    display: block;
+    width: 60%;
+}
+
+.custom-header{
+    background-color: rgb(2, 2, 77);
+}
+.btn-custom {
+    background-color: rgb(2, 2, 77) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.btn-custom:hover {
+    background-color: rgb(28, 21, 158) !important;
+}
+
+.btn-close {
+    filter: invert(1); /* Convierte el color a blanco */
+}
+
+
+/* Estilo para el botón de actualizar */
+#btnActualizar {
+    position: relative;
+    top: 471px;
+    left: 540px;
+    background-color: rgb(6, 4, 46);
+    /* Azul */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    padding: 8px 0px;
+    /* Espaciado interior */
+    font-size: 15px;
+    border-radius: 5px;
+    /* Bordes redondeados */
+    font-weight: bold;
+    cursor: pointer;
+    /* Cambia el cursor a mano cuando pase sobre el botón */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Efectos de transición */
+    width: 160px;
+    z-index: 10050;
+
+}
+
+/* Efecto hover para cuando el usuario pasa el mouse */
+#btnActualizar:hover {
+    background-color: #0056b3;
+    /* Cambia el color de fondo a un tono más oscuro */
+    transform: scale(1.05);
+    /* Agranda el botón ligeramente */
+}

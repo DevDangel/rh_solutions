@@ -1,0 +1,235 @@
+:root {
+  --primary-color: #000050;
+  --primary-dark: #000046;
+  --text-light: rgba(255, 255, 255, 0.8);
+  --white: #ffffff;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+  --font-main: 'Open Sans', sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  background-color: var(--primary-color);
+  color: var(--white);
+  height: 100vh;
+  position: fixed;
+  width: 300px;
+  overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+}
+
+.sidebar-brand {
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 700; /* Usar números en lugar de palabras para weight */
+  border-bottom: 1px solid var(--primary-dark);
+  text-align: left;
+  margin: 0; /* Elimina márgenes por defecto */
+}
+
+.sidebar-nav {
+  padding: 1rem;
+  flex-direction: column;
+}
+
+.sidebar-nav .nav-link {
+  color: var(--text-light);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Espacio entre icono y texto */
+  transition: var(--transition);
+  text-decoration: none; /* Elimina subrayado en enlaces */
+
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active { /* Estilo para enlace activo */
+  background-color: var(--primary-dark);
+  color: var(--white);
+}
+
+/* Main Content Styles */
+.main-content {
+  margin-left: 300px;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f8f9faa9; /* Fondo claro para contraste */
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  background-color: var(--white);
+  overflow: hidden; /* Para contenido que pueda sobresalir */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada al hover */
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* estilos del botn cerrar cesion del menu y posicion*/
+.sidebar-nav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.nav.flex-column.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.logout-item {
+  margin-top: auto;
+}
+
+
+/* Contenido */
+
+.main-content {
+  margin-left: 300px; /* Esto empuja el contenido a la derecha */
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary-dark);
+  border: none;
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 250px;
+  }
+
+  .main-content {
+    margin-left: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: var(--transition);
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* responsive para el boton menu */
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: var(--transition);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: var(--primary-color);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* resposive para el boton de cerrar menu */
+
+.btn-close-sidebar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  z-index: 1050;
+  cursor: pointer;
+  display: none; /* Ocultarlo en pantallas grandes */
+}
+
+@media (max-width: 768px) {
+  .btn-close-sidebar {
+    display: block;
+  }
+}
+
+
+/* barra superior */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 300px; /* ← mismo ancho que tu sidebar */
+  width: calc(100% - 300px); /* ← ocupa el espacio restante */
+  height: 70px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    left: 0;
+    width: 100%;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-top: 90px;
+  }
+}

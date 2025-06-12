@@ -1,0 +1,107 @@
+
+.card-header {
+    background-color: transparent;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.list-usuario {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-generar {
+    background-color: #1cc88a !important;
+    color: white;
+    margin-right: 5px;
+    position: relative;
+    z-index: 10;
+}
+
+.btn-enviar {
+    background-color: #36b9cc !important;
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+
+.btn-generar:hover,
+.btn-enviar:hover {
+    color: white;
+    opacity: 0.8;
+}
+
+.table-responsive {
+    padding: 0 20px;
+}
+
+/* Estilo para la cabecera de la tabla */
+.table thead th {
+    background-color: rgb(4, 4, 110);
+    color: white;
+    border-bottom: 2px solid rgb(4, 4, 110);
+}
+
+/* Estilo para las filas */
+.table tbody tr:hover {
+    background-color: rgba(4, 4, 110, 0.05);
+}
+
+.card {
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+}
+
+/* Estilo para el contenedor de búsqueda */
+.dataTables_filter {
+    float: right !important;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+/* Estilo para el input de búsqueda */
+.dataTables_filter input {
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 6px 12px !important;
+    margin-left: 10px !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.dataTables_filter input:focus {
+    border-color: #1cc88a !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(28, 200, 138, 0.25) !important;
+}
+
+/* Estilo para la etiqueta "Buscar" */
+.dataTables_filter label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-generar,
+.btn-enviar {
+    width: 110px;
+    /* Ajusta según lo que necesites */
+    text-align: center;
+}
+
+td {
+    white-space: nowrap;
+    /* Evita que el contenido se divida en múltiples líneas */
+}
+
+/* Estilo específico para la columna de acción */
+.table td:nth-child(4) {
+    padding-right: 12px;
+    /* Elimina el padding derecho */
+    width: 1%;
+    /* Fuerza a que la columna ocupe solo el espacio necesario */
+    white-space: nowrap;
+}

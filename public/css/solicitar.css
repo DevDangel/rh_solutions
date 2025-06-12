@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8ff;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5%;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: rgb(2, 2, 77);
+}
+
+#solicitarBtn {
+  background-color: rgb(4, 4, 110);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  margin-top: 15px;
+  float: right;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#solicitarBtn:hover {
+  background-color: rgb(6, 6, 130);
+}
+
+thead tr {
+  background-color: rgb(4, 4, 110);
+  color: white;
+}
+
+#certTable thead th {
+  background-color: rgb(4, 4, 110);
+  color: white;
+}
