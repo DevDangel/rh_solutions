@@ -55,7 +55,7 @@ public function pensiones(){
 public function arl(){
     return $this->belongsTo(Arl::class,'id_arl','id_arl');
 }
-public function cargo(){
+public function cargos(){
     return $this->belongsTo(Cargo::class,'id_cargo','id_cargo');
 }
 

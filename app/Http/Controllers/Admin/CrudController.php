@@ -15,12 +15,11 @@ use App\Models\Pension;
 use App\Models\CajaCompensacion;
 use App\Models\Profesion;
 
-
 class CrudController extends Controller
 {
+    // Vista principal con relaciones cargadas
     public function index()
     {
-        // Obtener todos los datos necesarios
         $usuarios = Usuario::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
@@ -32,38 +31,23 @@ class CrudController extends Controller
         $cajasCompensacion = CajaCompensacion::all();
         $profesiones = Profesion::all();
 
-        // Enviar todos los datos a la vista
-        return view("admin.listUser", compact(
-            'usuarios', 'departamentos', 'municipios', 'cargos', 'EstadosUsuario',
-            'Eps', 'pensiones', 'Arl', 'cajasCompensacion', 'profesiones'
+        return view('admin.listUser', compact(
+            'usuarios', 'departamentos', 'municipios', 'cargos',
+            'EstadosUsuario', 'Eps', 'pensiones', 'Arl',
+            'cajasCompensacion', 'profesiones'
         ));
     }
+
+    // Registrar nuevo usuario
     public function create(Request $request)
     {
-
-        $request->merge([
-            'correo' => strtolower(trim($request->correo))
-        ]);
-
-        $request->validate([
-            'correo' => 'required|email|max:255|unique:usuarios,correo_usuario',
-
-            'contraseña' => [
-                'required',
-                'min:8',
-                'regex:/^(?=(?:[^0-9]*\d){6})(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d!@#$%^&*()_+=\-{}\[\]:;"\'<>,.?\/]{8,10}$/'
-            ],
-
-        ], [
-            'contraseña.regex' => 'Mínimo 5 números, al menos 1 letra minúscula,al menos 1 letra mayúscula,1 símbolo(Longitud entre 8 y 10 caracteres)'
-        ]);
-      //  dd($request->all());
         try {
-            $sql = DB::insert(" insert into usuarios(doc_usuario,
-        tip_documento, pri_nombre, seg_nombre, pri_apellido, seg_apellido,
-        fec_nacimiento,tip_sangre, sex_usuario, estado_civil,dir_usuario,cel_usuario,cel_emer_usuario,correo_usuario,registro_profesional,contraseña,id_departamento, id_municipio,id_estado,id_cargo,id_eps,id_pension,id_arl, id_caj_compen,id_profesion) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-                $request->num_documento,
+            $sql = DB::insert(" insert into usuarios(tip_documento,
+        doc_usuario, pri_nombre, seg_nombre, pri_apellido, seg_apellido,
+        fec_nacimiento,tip_sangre, sex_usuario, estado_civil,cel_usuario,id_departamento, dir_usuario, id_municipio, cel_emer_usuario, correo_usuario,id_profesion,registro_profesional,id_cargo,contraseña,id_estado,id_eps, id_pension,
+        id_arl, id_caj_compen ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
                 $request->tip_documento,
+                $request->num_documento,
                 $request->prim_nombre,
                 $request->segun_nombre,
                 $request->prim_apellido,
@@ -72,119 +56,162 @@ class CrudController extends Controller
                 $request->tip_sangre,
                 $request->sexo,
                 $request->est_civil,
-                $request->direccion,
                 $request->celular,
+                $request->departamento,
+                $request->direccion,
+                $request->munici_residen,
                 $request->celular_emerg,
                 $request->correo,
+                $request->profesion,
                 $request->registro_profesional,
-                $request->contraseña,
-                $request->departamento,
-                $request->munici_residen,
-                $request->est_usuario,
                 $request->cargo,
+                $request->contraseña,
+                $request->est_usuario,
                 $request->eps,
                 $request->pension,
                 $request->arl,
                 $request->caj_compen,
-                $request->profesion,
             ]);
         } catch (\Throwable $th) {
-            $sql = 0;
-            // Si hay error, redirige con mensaje y conserva los datos del formulario
             return back()->with("Incorrecto", "Error al registrar el usuario")
-                ->with("modal", "registrar_")
-                ->withInput();
+                        ->with("modal", "registrar_")
+                        ->withInput();
         }
-        if ($sql == true) {
-            return back()->with("Correcto", "Usuario registrado correctamente")
-                ->with("modal", "registrar_");
-        } else {
-            return back()->with("Incorrecto", "Error al registrar el usuario")
-                ->with("modal", "registrar_")
-                ->withInput();
-        }
+        return $sql
+            ? back()->with("Correcto", "Usuario registrado correctamente")->with("modal", "registrar_")
+            : back()->with("Incorrecto", "Error al registrar el usuario")->with("modal", "registrar_")->withInput();
     }
 
+    // Actualizar usuario existente
     public function update(Request $request, $id)
     {
-        // Validación básica sugerida
-        $request->validate([
-
+        $request ->validate([
+            // validaciones
         ]);
-
         try {
-            $update = DB::table('usuarios')
-                ->where('id_usuario', $id)
-                ->update([
-                    'tip_documento' => $request->tip_documento,
-                    'doc_usuario' => $request->num_documento,
-                    'pri_nombre' => $request->prim_nombre,
-                    'seg_nombre' => $request->segun_nombre,
-                    'pri_apellido' => $request->prim_apellido,
-                    'seg_apellido' => $request->segun_apellido,
-                    'fec_nacimiento' => $request->fech_nac,
-                    'tip_sangre' => $request->tip_sangr,
-                    'sex_usuario' => $request->sexo,
-                    'estado_civil' => $request->est_civil,
-                    'cel_usuario' => $request->celular,
-                    'id_departamento' => $request->departamento,
-                    'dir_usuario' => $request->direccion,
-                    'id_municipio' => $request->munici_residen,
-                    'cel_emer_usuario' => $request->celular_emerg,
-                    'correo_usuario' => $request->correo,
-                    'id_profesion' => $request->profesion,
-                    'registro_profesional' => $request->registro_profesional,
-                    'id_cargo' => $request->cargo,
-                    'id_estado' => $request->est_usuario,
-                    'id_eps' => $request->eps,
-                    'id_pension' => $request->pension,
-                    'id_arl' => $request->arl,
-                    'id_caj_compen' => $request->caj_compen
-                ]);
+            $usuarioActual = DB::table('usuarios')->where('id_usuario', $id)->first();
 
-            if ($update === 0) {
-                return back()->with("Advertencia", "No se realizó ningún cambio.");
+            if (!$usuarioActual) {
+                return back()->with("Incorrect", "Usuario no encontrado.")->with("modal", "editar_" . $id);
             }
 
-            return back()->with("Correct", "Usuario actualizado correctamente")
-                ->with("modal", "editar_" . $id);
+            $nuevosDatos = [
+                'tip_documento' => $request->tip_documento,
+                'doc_usuario' => $request->num_documento,
+                'pri_nombre' => $request->prim_nombre,
+                'seg_nombre' => $request->segun_nombre,
+                'pri_apellido' => $request->prim_apellido,
+                'seg_apellido' => $request->segun_apellido,
+                'fec_nacimiento' => $request->fech_nac,
+                'tip_sangre' => $request->tip_sangr,
+                'sex_usuario' => $request->sexo,
+                'estado_civil' => $request->est_civil,
+                'cel_usuario' => $request->celular,
+                'id_departamento' => $request->departamento,
+                'dir_usuario' => $request->direccion,
+                'id_municipio' => $request->munici_residen,
+                'cel_emer_usuario' => $request->celular_emerg,
+                'correo_usuario' => $request->correo,
+                'id_profesion' => $request->profesion,
+                'registro_profesional' => $request->registro_profesional,
+                'id_cargo' => $request->cargo,
+                'id_estado' => $request->est_usuario,
+                'id_eps' => $request->eps,
+                'id_pension' => $request->pension,
+                'id_arl' => $request->arl,
+                'id_caj_compen' => $request->caj_compen,
+            ];
+            // Convertir el objeto actual a array y filtrar las mismas claves
+            $datosActuales = (array) $usuarioActual;
+            $datosComparables = array_intersect_key($datosActuales, $nuevosDatos);
 
+            // Comparar si hay cambios
+            $cambios = array_diff_assoc($nuevosDatos, $datosComparables);
+
+            if (empty($cambios)) {
+                return back()->with("Advertencia", "No se realizó ningún cambio.")->with("modal", "editar_" . $id);
+            }
+            // realizar la actulizacion
+            DB::table('usuarios')->where('id_usuario', $id)->update($nuevosDatos);
+
+            return back()->with("Correct", "Usuario actualizado correctamente.")->with("modal", "editar_" . $id);
         } catch (\Throwable $th) {
-            return back()->with("Incorrect", "Error al actualizar el usuario")
-                ->with("modal", "editar_" . $id);
+            return back()->with("Incorrect", "Error al actualizar el usuario.")->with("modal", "editar_" . $id);
         }
     }
 
-
+    // Eliminar usuario
     public function delete($id)
     {
         try {
-            $sql = DB::delete("DELETE FROM usuarios WHERE id_usuario=$id");
+            $sql = DB::delete("DELETE FROM usuarios WHERE id_usuario = ?", [$id]);
         } catch (\Throwable $th) {
             $sql = 0;
         }
-        if ($sql == true) {
-            return back()->with("Correcto", "Usuario eliminado correctamente");
-        } else {
-            return back()->with("Incorrecto", "Error al eliminar el usuario");
-        }
+        return $sql
+            ? back()->with("Eliminado", "Usuario eliminado correctamente")
+            : back()->with("Sin_eliminar", "Error al eliminar el usuario");
     }
-
 
     public function store(Request $request)
     {
         $request->validate([
-            'profesion' => 'required|string|max:255',
-            'reg_profesional' => function ($attribute, $value, $fail) use ($request) {
-                if (!in_array(strtolower($request->input('profesion')), ['aseador', 'conductor']) && empty($value)) {
+            'profesion' => 'required',
+            'registro_profesional' => function ($attribute, $value, $fail) use ($request) {
+                $profesionId = $request->input('profesion');
+
+                // Aquí debes obtener el nombre real de la profesión usando el ID
+                $profesion = DB::table('profesiones')->where('id_profesion', $profesionId)->value('nom_profesion');
+
+                if (!in_array(strtolower($profesion), ['aseador', 'conductor']) && empty($value)) {
                     $fail('El campo Registro profesional es obligatorio para esta profesión.');
                 }
             },
         ]);
 
-        // Si pasa la validación, puedes guardar los datos
-        // Empleado::create([...]);
+    }
+    // Obtener municipios por departamento
+    public function getMunicipios($idDepartamento)
+    {
+        $municipios = Municipio::where('id_departamento', $idDepartamento)->get();
+        return response()->json($municipios);
+    }
+
+    // Validación general vía AJAX
+    public function validarCampo(Request $request){
+        $request->validate([
+            'campo' => 'required|in:num_documento,correo,celular',
+            'valor' => 'required|string|max:255',
+        ]);
+
+        $campo = $request->input('campo');
+        $valor = trim($request->input('valor'));
+
+        $mapaCampos = [
+            'num_documento' => 'doc_usuario',
+            'correo' => 'correo_usuario',
+            'celular' => 'cel_usuario',
+        ];
+
+        $columna = $mapaCampos[$campo];
+
+        $exists = DB::table('usuarios')
+            ->where($columna, $valor)
+            ->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 
 
+    // Validación individual para celular (extra)
+    public function validarCelular(Request $request)
+    {
+        $celular = $request->input('celular');
+
+        // Verificar si ya existe en la tabla usuarios (columna cel_usuario)
+        $existe = DB::table('usuarios')->where('cel_usuario', $celular)->exists();
+
+        return response()->json(['existe' => $existe]);
+    }
 }
+

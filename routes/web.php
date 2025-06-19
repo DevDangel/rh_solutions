@@ -70,7 +70,7 @@ Route::middleware('auth:admin')->group(function () {
     // Aquí puedes agregar más rutas de admin protegidas
     //ruta para generar vista de crud
     // --------------------------------------- rutas crud --------------------------------------------------------------------//
-    Route::get('/lista-usuarios', [CrudController::class,'index'])->name( 'crud.index');
+    Route::get('/lista-usuario', [CrudController::class,'index'])->name( 'crud.index');
     //Ruta para botn crear
     Route::post('/registrar-usuario', [CrudController::class,'create'])->name( 'GestionarUsuario.create');
     //Ruta para boton actualizar
@@ -78,17 +78,16 @@ Route::middleware('auth:admin')->group(function () {
     //Ruta para boton eliminar
     Route::get('/usuarios/{id}/eliminar', [CrudController::class, 'delete'])
         ->name('GestionarUsuario.delete');
-    // Ruta para relacionesController
-    Route::get('/lista', [RelacionesController::class, 'index']);
     //Ruta paara validar con metodo ajax modal crear
-    Route::post('/validar-documento', [ValidacionController::class, 'validarDocumento'])->name('validarcrear.documento');
-    Route::post('/validar-numerocelular', [ValidacionController::class, 'validarCelular'])->name('validarcrear.celular');
-    Route::post('/validar-correos', [ValidacionController::class, 'validarCorreo'])->name('validarcrear.correo');
-    Route::post('/validar-contraseñas', [ValidacionController::class, 'validarContraseña'])->name('validarcrear.contraseña');
+    Route::post('/validar-documento', [CrudController::class, 'validarDocumento'])->name('validarcrear.documento');
+    Route::post('/validar-numerocelular', [CrudController::class, 'validarCelular'])->name('validarcrear.celular');
+    Route::post('/validar-correos', [CrudController::class, 'validarCorreo'])->name('validarcrear.correo');
+    Route::post('/validar-contraseñas', [CrudController::class, 'validarContraseña'])->name('validarcrear.
+    contraseña');
     //Ruta para validar con metodo ajax modal editar
-    Route::post('/validar-campo', [ValidacionController::class, 'validarCampo'])->name('validar.campo');
+    Route::post('/validar-campo', [CrudController::class, 'validarCampo'])->name('validar.campo');
     //ruta para enlazar municipio con departamento
-    Route::get('/municipios/{idDepartamento}', [RelacionesController::class, 'getMunicipios']);
+    Route::get('/municipios/{idDepartamento}', [CrudController::class, 'getMunicipios']);
     //-----------------------------------------------------------------------------------------------------------------------//
 
     //------------------------------------- ruta para las solicitudes y generar certificado----------------------------------//
