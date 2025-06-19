@@ -114,10 +114,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="InputSegun_apellido" class="form-label" style="color: black;">
-                                            Segundo apellido <span class="asterisco-rojo">*</span>
+                                            Segundo apellido
                                         </label>
                                         <input type="text" class="form-control capitalize" name="segun_apellido"
-                                            id="InputSegun_apellido" required value="{{ old('segun_apellido') }}" />
+                                            id="InputSegun_apellido"  value="{{ old('segun_apellido') }}" />
                                     </div>
                                 </div>
 
@@ -727,10 +727,10 @@
                                         <div class="mb-3">
                                             <label for="InputSegun_apellid{{$item->id_usuario}}" class="form-label"
                                                 style="color: black;">
-                                                Segundo apellido <span class="asterisco-rojo">*</span>
+                                                Segundo apellido
                                             </label>
                                             <input type="text" class="form-control capitalize" name="segun_apellido"
-                                                id="InputSegun_apellid{{$item->id_usuario}}" required
+                                                id="InputSegun_apellid{{$item->id_usuario}}"
                                                 value="{{$item->seg_apellido}}" />
                                         </div>
                                     </div>
