@@ -2,6 +2,9 @@
 
 @section('title', 'Solicitudes')
 @section('content')
+@section('banner')
+@endsection
+
 <div class="container  table-custom">
         <div class="card mb-4">
             <div class="card-header py-3">
@@ -104,6 +107,5 @@
         }
     });
 </script>
-
 @endpush
 @endsection

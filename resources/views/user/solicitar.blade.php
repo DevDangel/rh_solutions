@@ -1,7 +1,13 @@
 @extends('user.dashboard')
 
 @section('title', 'Solicitar Certificados')
+@push('styles')
+    <link rel="stylesheet" href= "{{asset('css/solicitar.css')}}" >
+@endpush
 @section('content')
+@section('banner')
+{{--escondemos la imagen---}}
+@endsection
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show">
         {{ session('success') }}
@@ -68,12 +74,10 @@
     </table>
   </div>
 @push('scripts')
-
   <!-- JS: jQuery + DataTables -->
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
   <script src="{{asset('js/solicitar.js')}}"></script>
-
 @endpush
 @endsection

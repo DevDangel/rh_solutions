@@ -1,6 +1,8 @@
 @extends('admin.dashboard')
 @section('title', 'Contratos')
 @section('content')
+@section('banner')
+@endsection
 {{--MENSAJE DE EXITO AL CREAR Y ERRO--}}
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" style="position: absolute;z-index:100000">
@@ -323,7 +325,7 @@
     </div>
 </div>
  <!-- JavaScript bundle with popper -->
-@endsection
+
 @push('scripts')
     <script src="{{ asset('js/certificados.js')}}"></script>
     <script>
@@ -352,7 +354,6 @@
             });
         });
     </script>
-    @push('scripts')
 <script>
 $('#modalEditarContrato').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget);
@@ -413,3 +414,4 @@ $('#modalEditarContrato').on('show.bs.modal', function (event) {
         });
 </script>
 @endpush
+@endsection

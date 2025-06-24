@@ -2,6 +2,8 @@
 
 @section('title', 'Lista de Usuarios')
 @section('content')
+@section('banner')
+@endsection
 <!-- Modal Agregar Datos-->
     <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">

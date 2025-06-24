@@ -6,12 +6,11 @@ use App\Http\Controllers\Admin\ContratoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CrudController;
 use App\Http\Controllers\Admin\HistorialController;
-use App\Http\Controllers\Admin\RelacionesController;
-use App\Http\Controllers\Admin\ValidacionController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuarioAuthController;
 use App\Http\Controllers\Usuario\SolicitarController;
+use App\Http\Controllers\Usuario\PerfilController;
 use App\Http\Controllers\Admin\SolicitudController;
 
 
@@ -45,6 +44,9 @@ Route::middleware('auth:usuario')->group(function () {
     Route::post('/usuario/solicitar-certificado', [SolicitarController::class, 'guardarSolicitud'])->name('usuario.solicitar');
 
     //-------------------------------------------------------------------------------------------//
+    //------------------------------- perfil de usuario------------------------------------------//
+    Route::get('/mi-perfil',[PerfilController::class,'index'])->name('perfil');
+    //-------------------------------------------------------------------------------------------//
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,12 +66,12 @@ Route::get('password/change', [PasswordResetController::class, 'showChangeForm']
 // 6. Actualizar la contraseña en la base de datos
 Route::post('password/update', [PasswordResetController::class, 'updatePassword'])->name('password.update');
 
-/////////////////////// rutas para el admin ///////////////////////////////////////////////////////
+////////////////////////////////////// rutas para el admin ////////////////////////////////////////////////////////////////////
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     // Aquí puedes agregar más rutas de admin protegidas
     //ruta para generar vista de crud
-    // --------------------------------------- rutas crud --------------------------------------------------------------------//
+    // -------------------------------- rutas crud lo que dejo loco a maicol --------------------------------------------------//
     Route::get('/lista-usuario', [CrudController::class,'index'])->name( 'crud.index');
     //Ruta para botn crear
     Route::post('/registrar-usuario', [CrudController::class,'create'])->name( 'GestionarUsuario.create');
@@ -110,4 +112,4 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/ver-certificado/{id_contrato}', [HistorialController::class, 'verCertificado'])->name('admin.verCertificado');
     //-----------------------------------------------------------------------------------------------------------------------//
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

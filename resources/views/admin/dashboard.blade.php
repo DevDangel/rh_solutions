@@ -172,11 +172,24 @@
     <h1 class="mb-4"></h1>
     <!--contenido-->
     <div class="main-content ">
+        @section('banner')
+            <img src="{{ asset('imgs/rh19.png') }}" alt="" width="100%" style="padding: 10%;">
+        @show
         @yield('content')
     </div>
     <!-- Tarjetas (Contenido de la primera imagen) -->
 
-    <!--javascript para el boton para abrir el menu-->
+
+    <!-- Bootstrap JS -->
+     <!-- Incluir jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/646ac4fad6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    @stack('scripts')
+     <!--javascript para el boton para abrir el menu-->
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const closeBtn = document.getElementById('closeSidebar');
@@ -190,15 +203,5 @@
             sidebar.classList.remove('active');
         });
     </script>
-    <!-- Bootstrap JS -->
-     <!-- Incluir jQuery y Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/646ac4fad6.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    @stack('scripts')
 </body>
-
 </html>
