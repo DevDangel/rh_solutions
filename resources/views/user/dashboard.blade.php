@@ -116,7 +116,8 @@
                 <span class="me-2 fw- fs-5 text-dark">{{ Auth::guard('usuario')->user()->pri_nombre . ' ' . Auth::guard('usuario')->user()->pri_apellido }}
 
                 </span>
-                <i class="fas fa-user-circle fa-2x text-primary"></i>
+                <img src="{{ asset(Auth::guard('usuario')->user()->img_perfil ?? 'imgs/default.jpg') }}" alt="Foto de perfil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="{{route('perfil')}}">Perfil</a></li>

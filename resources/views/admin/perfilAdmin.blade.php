@@ -1,8 +1,9 @@
-@extends('user.dashboard')
+@extends('admin.dashboard')
 @section('title','Mi perfil')
 @push('styles')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('css/perfil.css')}}">
+<link rel="stylesheet" href="{{asset('css/inputs.css')}}">
 @endpush
 @section('content')
 @section('banner')
@@ -11,7 +12,7 @@
 <div class="container mt-5">
     <!-- Datos del nuevo usuario -->
     <div class="form-section">
-        <form action="{{route('perfil.actualizar')}}" method="POST" id="formEditarPerfil" enctype="multipart/form-data"> {{---solo los update llevan name---}}
+        <form action="{{route('perfilAdmin.actualizar')}}" method="POST" id="formEditarPerfil" enctype="multipart/form-data"> {{---solo los update llevan name---}}
             @csrf
             @method('PUT')
             <h2>Datos personales</h2>
@@ -21,8 +22,7 @@
                     <div class="avatar-wrapper mx-auto">
                         <img id="previewImage"  src="{{ asset($usuario->img_perfil ?? 'imgs/default.jpg') }}" alt="Foto por defecto" class="avatar-img mb-3">
                         <label for="InputFotoPerfil" class="btn btn-outline-primary btn-upload d-none modo-edicion texto-hover">
-                            <i class="fas fa-upload me-2"></i> Seleccionar foto
-                        </label>
+                            <i class="fas fa-upload me-2"></i>Seleccionar foto </label>
                         <input type="file" class="d-none modo-edicion" id="InputFotoPerfil" name="foto_perfil" accept="image/*" onchange="previewPhoto(event)" style="display: none;">
                     </div>
                 </div>
@@ -171,7 +171,7 @@
             <!-- Botones de acción -->
             <div class="btn-container">
                 <button type="button" id="btnEditarPerfil" class="btn-custom-perfil" data-modo="editar">Editar mi información</button>
-                <a href="{{route('usuario.dashboard')}}"  class="btn btn-custom-perfil">Volver a inicio</a>
+                <a href="{{route('admin.dashboard')}}"  class="btn btn-custom-perfil">Volver a inicio</a>
             </div>
         </form>
     </div>
@@ -182,10 +182,10 @@
     <div class="modal-content text-center">
       <div class="modal-header border-0">
         <h5 class="modal-title w-100" id="modalMensaje"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close" data-dismiss="modal"></button>
       </div>
       <div class="modal-footer border-0 justify-content-center">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Promise((resolve, reject) => {
             munSelect.innerHTML = '<option value="" disabled selected>Seleccione</option>';
 
-            fetch(`/municipios/${departamentoID}`)
+            fetch(`/municipios-admin/${departamentoID}`)
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(municipio => {

@@ -5,6 +5,10 @@
     border-radius: 10px;
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
 }
+input[readonly] {
+  background-color: #fff;
+  color: #212529;
+}
 
 .form-section h2 {
     font-size: 23px;
@@ -30,6 +34,7 @@
     height: 40px!important;
     font-size: 15px!important;
     font-weight: 500 !important;
+    border: none !important;
 }
 
 .btn-custom-perfil:hover {
@@ -65,3 +70,34 @@
     padding: 8px 10px;
     width: 100%;
 }
+
+.texto-hover {
+    position: relative;
+    cursor: pointer;
+}
+
+.texto-hover::after {
+    content: "Máximo 20 MB";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 4px 8px;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(5px);
+    transition: all 0.2s ease-in-out;
+    z-index: 10;
+    width: 100%;
+}
+
+.texto-hover:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+

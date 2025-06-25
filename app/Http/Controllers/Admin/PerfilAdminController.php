@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Usuario;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,11 +16,11 @@ use App\Models\Pension;
 use App\Models\CajaCompensacion;
 use App\Models\Profesion;
 
-class PerfilController extends Controller
+class PerfilAdminController extends Controller
 {
     public function index(){
         // Autenticación con el guard 'usuario'
-        $usuario = Auth::guard('usuario')->user();
+        $usuario = Auth::guard('admin')->user();
 
         // traernos los campos de las demas tablas
         $departamentos = Departamento::all();
@@ -33,14 +33,14 @@ class PerfilController extends Controller
         $cajasCompensacion = CajaCompensacion::all();
         $profesiones = Profesion::all();
 
-        return view('user.perfilUsuario', compact(
+        return view('admin.perfilAdmin', compact(
             'usuario', 'departamentos', 'municipios', 'cargos',
             'estadosUsuario', 'eps', 'pensiones', 'arl',
             'cajasCompensacion', 'profesiones'
         ));
     }
     public function update(Request $request){
-        $usuario = Auth::guard('usuario')->user();
+        $usuario = Auth::guard('admin')->user();
 
         // Validaciones básicas, puedes ajustar según tus reglas
         $request->validate([
@@ -52,7 +52,7 @@ class PerfilController extends Controller
             'dir_usuario' => 'required|string|max:255',
             'id_departamento' => 'required|integer',
             'id_municipio' => 'required|integer',
-            'foto_perfil' => 'nullable|image|max:20428', //hasta 20mb
+            'foto_perfil' => 'nullable|image|max:20428', // hasta 20mb
         ]);
         // crear la carpeta imgs si no existe al guardar la imagen en la bd care pastel
         if (!Storage::disk('public')->exists('imgs')) {
@@ -77,7 +77,7 @@ class PerfilController extends Controller
             'id_municipio' => $request->id_municipio,
         ]);
 
-        return redirect()->route('perfil')->with('estado', 'success');
+        return redirect()->route('perfilAdmin')->with('estado', 'success');
     }
     public function municipiosPorDepartamento($id){
         $municipios = Municipio::where('id_departamento', $id)->get();

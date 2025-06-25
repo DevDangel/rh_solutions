@@ -43,7 +43,8 @@ protected $table = 'usuarios';
         'id_pension',
         'id_arl',
         'id_caj_compen',
-        'id_profesion'
+        'id_profesion',
+        'img_perfil'
     ];
 public function eps(){
     return $this->belongsTo(Eps::class,'id_eps','id_eps');

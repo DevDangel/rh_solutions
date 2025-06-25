@@ -6,12 +6,14 @@ use App\Http\Controllers\Admin\ContratoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CrudController;
 use App\Http\Controllers\Admin\HistorialController;
+use App\Http\Controllers\Admin\PerfilAdminController;
+use App\Http\Controllers\Admin\SolicitudController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuarioAuthController;
 use App\Http\Controllers\Usuario\SolicitarController;
 use App\Http\Controllers\Usuario\PerfilController;
-use App\Http\Controllers\Admin\SolicitudController;
+
 
 
 
@@ -26,7 +28,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');/
 //--------------Rutas del Login y Logout Para el Admin-----------------//
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-
 //--------------Rutas del Login y Logout Para el Usuario-----------------//
 Route::get('/usuario/login', [UsuarioAuthController::class, 'showLoginForm'])->name('usuario.login');
 Route::post('/usuario/login', [UsuarioAuthController::class, 'login'])->name('usuario.login.submit');
@@ -46,6 +47,9 @@ Route::middleware('auth:usuario')->group(function () {
     //-------------------------------------------------------------------------------------------//
     //------------------------------- perfil de usuario------------------------------------------//
     Route::get('/mi-perfil',[PerfilController::class,'index'])->name('perfil');
+    Route::put('/mi-perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.actualizar');
+    Route::get('/municipios/{id}', [PerfilController::class, 'municipiosPorDepartamento']);
+
     //-------------------------------------------------------------------------------------------//
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,5 +115,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/historial-certificados',[HistorialController::class,'view'])->name('admin.historial');
     Route::get('/admin/ver-certificado/{id_contrato}', [HistorialController::class, 'verCertificado'])->name('admin.verCertificado');
     //-----------------------------------------------------------------------------------------------------------------------//
+    //------------------------------- perfil de admin------------------------------------------//
+    Route::get('/mi-perfil-admin',[PerfilAdminController::class,'index'])->name('perfilAdmin');
+    Route::put('/mi-perfil-admin/actualizar', [PerfilAdminController::class, 'update'])->name('perfilAdmin.actualizar');
+    Route::get('/municipios-admin/{id}', [PerfilAdminController::class, 'municipiosPorDepartamento']);
+
+    //-------------------------------------------------------------------------------------------//
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

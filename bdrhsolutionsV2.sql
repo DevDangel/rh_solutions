@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bdrhsolutions
+-- Host: 127.0.0.1    Database: bdrhsolutionsv2
 -- ------------------------------------------------------
 -- Server version	8.0.42
 
@@ -48,8 +48,8 @@ DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -72,8 +72,8 @@ DROP TABLE IF EXISTS `cache_locks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -176,8 +176,8 @@ CREATE TABLE `certificados` (
   `id_certificado` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL,
   `id_contrato` int NOT NULL,
-  `ruta_pdf` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `estado` enum('pendiente','enviado') COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'pendiente',
+  `ruta_pdf` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `estado` enum('pendiente','enviado') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'pendiente',
   `fecha_solicitud` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_envio` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_certificado`),
@@ -208,9 +208,9 @@ CREATE TABLE `contrato` (
   `id_contrato` int NOT NULL AUTO_INCREMENT,
   `fec_ingreso` date NOT NULL,
   `fec_finalizacion` date DEFAULT NULL,
-  `funciones` text COLLATE utf8mb4_spanish_ci,
-  `salario` varchar(45) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `clausulas` text COLLATE utf8mb4_spanish_ci,
+  `funciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+  `salario` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `clausulas` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   `id_tip_contrato` int NOT NULL,
   `id_usuario` int NOT NULL,
   `id_tiemp_contrato` int NOT NULL,
@@ -224,7 +224,7 @@ CREATE TABLE `contrato` (
   CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`id_tiemp_contrato`) REFERENCES `tiempo_contrato` (`id_tiemp_contrato`),
   CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`id_est_contrato`) REFERENCES `estado_contrato` (`id_est_contrato`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,6 +233,7 @@ CREATE TABLE `contrato` (
 
 LOCK TABLES `contrato` WRITE;
 /*!40000 ALTER TABLE `contrato` DISABLE KEYS */;
+INSERT INTO `contrato` VALUES (20,'2024-01-01','2024-06-01','trabajar xd','1300000','no quejarse del trabajo xd',1,8,4,2),(21,'2024-06-02','2024-12-31',NULL,'1300000',NULL,1,8,4,2),(22,'2025-01-01',NULL,NULL,'1300000',NULL,2,8,9,1),(23,'2025-01-01',NULL,NULL,'1300000',NULL,1,10,6,1);
 /*!40000 ALTER TABLE `contrato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,11 +299,8 @@ CREATE TABLE `documentos` (
   `nom_documento` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `ruta_archivo` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `fecha_vencimiento` datetime DEFAULT NULL,
-  `tamaño_archivo` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `serial_unico` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `estado` enum('pendiente','cargado','rechazado') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT 'pendiente',
-  `tipo_mime` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `id_usuario` int NOT NULL,
   `id_tip_document` int NOT NULL,
   PRIMARY KEY (`id_documentos`),
@@ -333,17 +331,15 @@ DROP TABLE IF EXISTS `documentos_requeridos`;
 CREATE TABLE `documentos_requeridos` (
   `id_doc_requerido` int NOT NULL AUTO_INCREMENT,
   `obligatorio` tinyint DEFAULT '1' COMMENT 'Si el documento es obligatorio la fecha de expiracion\n',
-  `fec_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `create_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `id_cargo` int NOT NULL,
   `id_tip_document` int NOT NULL,
-  `id_usuario` int NOT NULL,
+  `nom_documento` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id_doc_requerido`),
   KEY `id_cargo` (`id_cargo`),
   KEY `id_tip_document` (`id_tip_document`),
-  KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `documentos_requeridos_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`),
-  CONSTRAINT `documentos_requeridos_ibfk_2` FOREIGN KEY (`id_tip_document`) REFERENCES `tipo_documento` (`id_tip_document`),
-  CONSTRAINT `documentos_requeridos_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
+  CONSTRAINT `documentos_requeridos_ibfk_2` FOREIGN KEY (`id_tip_document`) REFERENCES `tipo_documento` (`id_tip_document`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -464,11 +460,11 @@ DROP TABLE IF EXISTS `failed_jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -494,12 +490,12 @@ DROP TABLE IF EXISTS `historial_certificados`;
 CREATE TABLE `historial_certificados` (
   `id_certificado` int NOT NULL AUTO_INCREMENT,
   `id_contrato` int NOT NULL,
-  `motivo` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  `motivo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_certificado`),
   KEY `id_contrato` (`id_contrato`),
   CONSTRAINT `historial_certificados_ibfk_1` FOREIGN KEY (`id_contrato`) REFERENCES `contrato` (`id_contrato`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -508,6 +504,7 @@ CREATE TABLE `historial_certificados` (
 
 LOCK TABLES `historial_certificados` WRITE;
 /*!40000 ALTER TABLE `historial_certificados` DISABLE KEYS */;
+INSERT INTO `historial_certificados` VALUES (14,23,'embarazo','2025-06-11 18:52:25'),(15,20,'certificado','2025-06-11 18:54:48'),(16,21,'certificado','2025-06-11 18:54:51'),(17,22,'Holanda','2025-06-23 19:59:03');
 /*!40000 ALTER TABLE `historial_certificados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,13 +516,13 @@ DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL,
@@ -551,8 +548,8 @@ DROP TABLE IF EXISTS `jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
@@ -615,7 +612,7 @@ DROP TABLE IF EXISTS `migrations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -665,8 +662,8 @@ DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -739,11 +736,11 @@ DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
@@ -757,7 +754,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('58d6CZZXNVseqmkDjuhGzhnFqlRwDVFNJ6v7DG59',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTozOntzOjY6Il90b2tlbiI7czo0MDoicmxiSGRnYkFVQkN6dEo2aktNZThWNlRHNUJ1V0FvN3d0R2tvek9QcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9sb2dpbiI7fX0=',1749449260),('gsCitZzYz6IaeZWwkP6SBP4N7Bxv6RjfeZg5XZaW',7,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTGN4T01uN3ExY2owd0tXVUYwU08wYWV5WnA2ckVLTTQydkVsM2lrUSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9hZG1pbi1jb250cmF0b3MiO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7fQ==',1749449362),('QYP97P9FzHoW06jyuzSareaMmY5jSjCN1wmGPHd0',8,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo1OntzOjY6Il90b2tlbiI7czo0MDoiYTNmQmJWODBsM2FxcElCSE4yOHJheUhmWHVla0hKZ1hZMUhqZGdNVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozNDoiaHR0cDovL3JoX3NvbHV0aW9ucy50ZXN0L3NvbGljaXRhciI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM0OiJodHRwOi8vcmhfc29sdXRpb25zLnRlc3Qvc29saWNpdGFyIjt9czo1NDoibG9naW5fdXN1YXJpb181OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjg7fQ==',1749443041);
+INSERT INTO `sessions` VALUES ('WHBourLE3b7GJVvOIFWRYJokv59I7SbW49eXFjXW',7,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUWw2cFV2OVdjaTV4ZDM5NDZtdFQxQmJ6YmJPQ2ZaM2YzdFdKc3o4eCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9taS1wZXJmaWwtYWRtaW4iO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozODoiaHR0cDovL3JoX3NvbHV0aW9ucy50ZXN0L211bmljaXBpb3MvMjMiO319',1750826861);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -771,11 +768,11 @@ DROP TABLE IF EXISTS `solicitud_certificado`;
 CREATE TABLE `solicitud_certificado` (
   `id_solicitud` int NOT NULL AUTO_INCREMENT,
   `id_contrato` int NOT NULL COMMENT 'Este id es fundamental para traerme todos los campos de las demas tablas, doc_usuario, nombrecompleto, tipo_decontrato',
-  `motivo` text COLLATE utf8mb4_spanish_ci NOT NULL COMMENT 'motivo por el cual solicita el certificado',
+  `motivo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL COMMENT 'motivo por el cual solicita el certificado',
   PRIMARY KEY (`id_solicitud`),
   KEY `id_contrato` (`id_contrato`),
   CONSTRAINT `solicitud_certificado_ibfk_1` FOREIGN KEY (`id_contrato`) REFERENCES `contrato` (`id_contrato`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -784,6 +781,7 @@ CREATE TABLE `solicitud_certificado` (
 
 LOCK TABLES `solicitud_certificado` WRITE;
 /*!40000 ALTER TABLE `solicitud_certificado` DISABLE KEYS */;
+INSERT INTO `solicitud_certificado` VALUES (15,20,'certificado'),(16,21,'certificado'),(17,23,'embarazo'),(18,22,'Holanda');
 /*!40000 ALTER TABLE `solicitud_certificado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -849,7 +847,7 @@ CREATE TABLE `tipo_documento` (
   `nom_tip_document` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id_tip_document`),
   UNIQUE KEY `nom_tip_document` (`nom_tip_document`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -858,6 +856,7 @@ CREATE TABLE `tipo_documento` (
 
 LOCK TABLES `tipo_documento` WRITE;
 /*!40000 ALTER TABLE `tipo_documento` DISABLE KEYS */;
+INSERT INTO `tipo_documento` VALUES (1,'PDF');
 /*!40000 ALTER TABLE `tipo_documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,11 +869,11 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -905,7 +904,7 @@ CREATE TABLE `usuarios` (
   `pri_nombre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `seg_nombre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `pri_apellido` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `seg_apellido` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `seg_apellido` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `fec_nacimiento` date NOT NULL,
   `tip_sangre` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `sex_usuario` enum('Masculino','Femenino') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -925,6 +924,7 @@ CREATE TABLE `usuarios` (
   `id_arl` int NOT NULL,
   `id_caj_compen` int NOT NULL,
   `id_profesion` int NOT NULL,
+  `img_perfil` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT 'imgs/default.jpg',
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `doc_usuario` (`doc_usuario`),
   UNIQUE KEY `correo_usuario` (`correo_usuario`),
@@ -945,7 +945,7 @@ CREATE TABLE `usuarios` (
   CONSTRAINT `usuarios_ibfk_6` FOREIGN KEY (`id_arl`) REFERENCES `arl` (`id_arl`),
   CONSTRAINT `usuarios_ibfk_7` FOREIGN KEY (`id_caj_compen`) REFERENCES `caja_compensacion` (`id_caj_compen`),
   CONSTRAINT `usuarios_ibfk_8` FOREIGN KEY (`id_profesion`) REFERENCES `profesion` (`id_profesion`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -954,7 +954,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (7,'123456789','CC','Sara','Sofía','Rodríguez','Hernández','1990-05-15','O+','Femenino','Soltero(a)','Cra 12 #34-56','3143191393','3201234567','sarisofia011@gmail.com','RP-00123','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',1,1,1,1,1,1,1,1,1),(8,'1104940128','CC','Angel','Arturo','Herrera','Hernández','1990-05-15','O+','Femenino','Soltero(a)','Cra 12 #34-56','3204567789','3201234567','angeldavidh18@gmail.com',NULL,'$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',1,1,1,2,1,1,1,1,2),(9,'1110592875','CC','Angel','David','Herrera','Acevedo','1998-09-01','B+','Masculino','Soltero(a)','Manzana E casa 2','3016755558','3144487664','seniorherreraangel@gmail.com','1110592875','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',1,1,1,9,3,2,3,4,1),(10,'1012345678','CC','Andrés','Felipe','Ramírez','Gómez','1990-05-15','A+','Masculino','Soltero(a)','Calle 23 #45','3101234567','3107654321','andres.ramirez@mail.com','REG1234','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,7,14,5,3,8,19,3),(11,'1012345679','CC','María','Isabel','López','Martínez','1988-11-20','O+','Femenino','Casado(a)','Carrera 15 #7-10','3109876543','3103456789','maria.lopez@mail.com','REG5678','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,2,22,2,4,5,11,7),(12,'1012345680','CC','Juan','Carlos','Pérez','Rodríguez','1992-07-08','B-','Masculino','Divorciado(a)','Av. Las Flores #9','3112345678','3118765432','juan.perez@mail.com','REG9101','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,9,19,1,5,7,2,4),(13,'1012345681','CC','Catalina','María','González','Suárez','1995-01-10','AB+','Femenino','Soltero(a)','Calle 45 #22','3102223333','3104445555','catalina.gonzalez@mail.com','REG1121','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,3,7,6,2,4,25,1),(14,'1012345682','CC','Luis','Fernando','Morales','Castro','1987-09-30','A-','Masculino','Casado(a)','Cra 10 #5-15','3111112222','3113334444','luis.morales@mail.com','REG3141','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,6,10,9,1,3,9,5),(15,'1012345683','CC','Valentina','Sofía','Ramírez','Vargas','1993-03-25','O-','Femenino','Divorciado(a)','Calle 7 #33','3105556666','3107778888','valentina.ramirez@mail.com','REG5161','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,8,16,4,3,2,14,6),(16,'1012345684','CC','David','Alejandro','Hernández','Salazar','1991-12-12','B+','Masculino','Soltero(a)','Av. 20 #8','3119990000','3118887777','david.hernandez@mail.com','REG7181','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,5,23,7,5,9,5,2),(17,'1012345685','CC','Juliana','Fernanda','Torres','Ramírez','1989-08-08','AB-','Femenino','Casado(a)','Carrera 11 #3-20','3103332222','3104443333','juliana.torres@mail.com','REG9202','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,25,3,4,6,12,8),(18,'1012345686','CC','Santiago','Andrés','Castillo','Mendoza','1994-06-18','A+','Masculino','Soltero(a)','Calle 30 #14','3111212121','3113434343','santiago.castillo@mail.com','REG1222','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,4,21,8,1,1,1,7),(19,'1012345687','CC','Laura','Beatriz','Ruiz','Ochoa','1990-10-05','O+','Femenino','Divorciado(a)','Av. Central #10','3104545454','3106767676','laura.ruiz@mail.com','REG3242','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,10,12,10,2,10,24,4);
+INSERT INTO `usuarios` VALUES (7,'123456789','CC','Sara','Sofía','Rodríguez','Hernández','1990-05-15','O+','Femenino','Separado(a)','calle 100 villa marina','3143191393','3206634567','sarisofia011@gmail.com','RP-00123','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,1,1,1,1,1,1,'imgs/default.jpg'),(8,'1104940128','CC','Angel','Arturo','Herrera','Hernández','1990-05-15','O+','Masculino','Casado(a)','Manzana E casa Villa María','3204777777','3201244467','angeldavidh18@gmail.com','1119592875','$2y$12$mb3CF8TK2w81lzQUV9OqN.4NctxAh7JWHPRmJxOL3xQoAYejF/KgS',23,959,1,2,1,1,1,1,2,'imgs/default.jpg'),(9,'1110592875','CC','Angel','David','Herrera','Acevedo','1998-09-01','B+','Masculino','Soltero(a)','Manzana E casa 2','3016755558','3144487664','seniorherreraangel@gmail.com','1110592875','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,9,3,2,3,4,1,'imgs/default.jpg'),(10,'1012345678','CC','Luisa','Fernanda','Lasso ','Méndez','1990-05-15','A+','Masculino','Soltero(a)','Calle 23 #45','3101234567','3107654321','ssrodriguezh@ut.edu.co','REG1234','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,7,14,5,3,8,19,3,'imgs/default.jpg'),(11,'1012345679','CC','María','Isabel','López','Martínez','1988-11-20','O+','Femenino','Casado(a)','Carrera 15 #7-10','3109876543','3103456789','maria.lopez@mail.com','REG5678','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,2,22,2,4,5,11,7,'imgs/default.jpg'),(12,'1012345680','CC','Juan','Carlos','Pérez','Rodríguez','1992-07-08','B-','Masculino','Divorciado(a)','Av. Las Flores #9','3112345678','3118765432','juan.perez@mail.com','REG9101','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,9,19,1,5,7,2,4,'imgs/default.jpg'),(13,'1012345681','CC','Catalina','María','González','Suárez','1995-01-10','AB+','Femenino','Soltero(a)','Calle 45 #22','3102223333','3104445555','catalina.gonzalez@mail.com','REG1121','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,3,7,6,2,4,25,1,'imgs/default.jpg'),(14,'1012345682','CC','Luis','Fernando','Morales','Castro','1987-09-30','A-','Masculino','Casado(a)','Cra 10 #5-15','3111112222','3113334444','luis.morales@mail.com','REG3141','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,6,10,9,1,3,9,5,'imgs/default.jpg'),(15,'1012345683','CC','Valentina','Sofía','Ramírez','Vargas','1993-03-25','O-','Femenino','Divorciado(a)','Calle 7 #33','3105556666','3107778888','valentina.ramirez@mail.com','REG5161','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,8,16,4,3,2,14,6,'imgs/default.jpg'),(16,'1012345684','CC','David','Alejandro','Hernández','Salazar','1991-12-12','B+','Masculino','Soltero(a)','Av. 20 #8','3119990000','3118887777','david.hernandez@mail.com','REG7181','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,5,23,7,5,9,5,2,'imgs/default.jpg'),(17,'1012345685','CC','Juliana','Fernanda','Torres','Ramírez','1989-08-08','AB-','Femenino','Casado(a)','Carrera 11 #3-20','3103332222','3104443333','juliana.torres@mail.com','REG9202','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,25,3,4,6,12,8,'imgs/default.jpg'),(18,'1012345686','CC','Santiago','Andrés','Castillo','Mendoza','1994-06-18','A+','Masculino','Soltero(a)','Calle 30 #14','3111212121','3113434343','santiago.castillo@mail.com','REG1222','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,4,21,8,1,1,1,7,'imgs/default.jpg'),(19,'1012345687','CC','Laura','Beatriz','Ruiz','Ochoa','1990-10-05','O+','Femenino','Divorciado(a)','Av. Central #10','3104545454','3106767676','laura.ruiz@mail.com','REG3242','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,10,12,10,2,10,24,4,'imgs/default.jpg'),(20,'2222222222','CC','Arturo',NULL,'Montana',NULL,'2000-01-01','B+','Masculino','Soltero(a)','Manzan e casa 2','3144487664','3144487664','mario@gmail.com','1110592875','User12345$',23,959,1,2,4,4,9,29,3,'imgs/default.jpg'),(21,'3333333333','CC','Altor',NULL,'Zur',NULL,'1998-01-01','B+','Masculino','Soltero(a)','Calle las plamas','3202897871','3144487664','altorzur@gmail.com','1110592875','User12345$',1,1,1,10,12,4,5,22,6,'imgs/default.jpg');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -967,4 +967,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-09  1:14:54
+-- Dump completed on 2025-06-24 23:49:49

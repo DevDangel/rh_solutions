@@ -1244,6 +1244,9 @@
                         url: '{{ url("municipios") }}/' + departamentoID,
                         type: 'GET',
                         dataType: 'json',
+                        xhrFields: {
+                            withCredentials: true // <- ESTA LÍNEA es importante
+                        },
                         success: function (data) {
                             $.each(data, function (index, municipio) {
                                 let selected = (municipioSeleccionado == municipio.id_municipio) ? 'selected' : '';
@@ -1251,7 +1254,7 @@
                             });
                         },
                         error: function () {
-                            alert('Error al cargar los municipios');
+                            alert('Error al cargar los municipio');
                         }
                     });
                 }
