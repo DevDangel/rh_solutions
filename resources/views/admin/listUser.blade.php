@@ -1191,6 +1191,12 @@
                     url: '{{ url("municipios") }}/' + departamentoID,
                     type: 'GET',
                     dataType: 'json',
+                    xhrFields: {
+                    withCredentials: true
+                    },
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function (data) {
                         $('#InputMunici_residen').empty();
                         $('#InputMunici_residen').append('<option value="" disabled selected>Seleccione</option>');
@@ -1245,7 +1251,10 @@
                         type: 'GET',
                         dataType: 'json',
                         xhrFields: {
-                            withCredentials: true // <- ESTA LÍNEA es importante
+                        withCredentials: true
+                        },
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
                             $.each(data, function (index, municipio) {

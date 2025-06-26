@@ -48,7 +48,9 @@ Route::middleware('auth:usuario')->group(function () {
     //------------------------------- perfil de usuario------------------------------------------//
     Route::get('/mi-perfil',[PerfilController::class,'index'])->name('perfil');
     Route::put('/mi-perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.actualizar');
+    // --------------------- ruta que esta causando el bug ----------------------------------//
     Route::get('/municipios/{id}', [PerfilController::class, 'municipiosPorDepartamento']);
+    //---------------------------------------------------------------------------------------//
 
     //-------------------------------------------------------------------------------------------//
 });
@@ -69,6 +71,7 @@ Route::post('password/reset', [PasswordResetController::class, 'resetPassword'])
 Route::get('password/change', [PasswordResetController::class, 'showChangeForm'])->name('password.change');
 // 6. Actualizar la contraseña en la base de datos
 Route::post('password/update', [PasswordResetController::class, 'updatePassword'])->name('password.update');
+
 
 ////////////////////////////////////// rutas para el admin ////////////////////////////////////////////////////////////////////
 Route::middleware('auth:admin')->group(function () {
