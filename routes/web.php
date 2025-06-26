@@ -48,8 +48,8 @@ Route::middleware('auth:usuario')->group(function () {
     //------------------------------- perfil de usuario------------------------------------------//
     Route::get('/mi-perfil',[PerfilController::class,'index'])->name('perfil');
     Route::put('/mi-perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.actualizar');
-    // --------------------- ruta que esta causando el bug ----------------------------------//
-    Route::get('/municipios/{id}', [PerfilController::class, 'municipiosPorDepartamento']);
+    // --------------------- ruta que esta causando el bug SOLUCION: -user --------------------------//
+    Route::get('/municipios-user/{id}', [PerfilController::class, 'municipiosPorDepartamento']);
     //---------------------------------------------------------------------------------------//
 
     //-------------------------------------------------------------------------------------------//
