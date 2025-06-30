@@ -99,6 +99,16 @@
                             <input type="text" name="doc_usuario" class="form-control" required pattern="^[0-9]{7,10}$"
                                 placeholder="Digite 7 a 10 dígitos" id="InputNum_documen">
                         </div>
+                        {{---NUEVOS INPUTS TRAER NOMBRE COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="InputNum_documen">Nombre</label>
+                            <input type="text" name="doc_usuario" class="form-control bg-light" readonly>
+                        </div>
+                        {{---NUEVOS INPUTS TRAER APELLIDO COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="InputNum_documen">Apellido</label>
+                            <input type="text" name="doc_usuario" class="form-control bg-light" readonly>
+                        </div>
 
                         <div class="col-md-6">
                             <label for="InputTipo_contrato" class="form-label" style="color: black">Tipo de contrato

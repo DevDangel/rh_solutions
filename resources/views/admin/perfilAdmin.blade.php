@@ -171,6 +171,7 @@
             <!-- Botones de acción -->
             <div class="btn-container">
                 <button type="button" id="btnEditarPerfil" class="btn-custom-perfil" data-modo="editar">Editar mi información</button>
+                <a href="{{route('perfilAdmin')}}" class="btn btn-custom-perfil d-none modo-edicion">Cancelar Edición</a>
                 <a href="{{route('admin.dashboard')}}"  class="btn btn-custom-perfil">Volver a inicio</a>
             </div>
         </form>
