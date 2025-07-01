@@ -112,6 +112,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/contrato/editar/{id}',[ContratoController::class, 'edit'])->name('contrato.edit');
     Route::put('/contrato/update/{id}',[ContratoController::class,'update'])->name('contrato.update');
     Route::delete('/contrato/delete/{id}',[ContratoController::class,'delete'])->name('contrato.delete');
+    Route::post('/verificar-documento', [ContratoController::class, 'verificarDocumento']);
     //-----------------------------------------------------------------------------------------------------------------------//
 
     // --------------------------------- rutas para historial certificados --------------------------------------------------//

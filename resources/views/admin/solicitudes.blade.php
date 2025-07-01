@@ -1,6 +1,8 @@
 @extends('admin.dashboard')
-
 @section('title', 'Solicitudes')
+@push('styles')
+   <link rel="stylesheet" href="{{asset('css/solicitud.css')}}">
+@endpush
 @section('content')
 @section('banner')
 @endsection

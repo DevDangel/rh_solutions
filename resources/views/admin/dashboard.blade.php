@@ -4,15 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') Panel de Usuario - RH Solutions</title>
+    <title>@yield('title') Panel del Admin - RH Solutions</title>
     {{---michels---}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Enlace a css externo -->
-    <link rel="stylesheet" href="{{ asset('css/gestionarUsuario.css') }}">
-    <link rel="stylesheet" href="{{asset('css/solicitud.css')}}">
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
-    <link rel="stylesheet" href="{{asset('css/contratos.css')}}">
-    @stack('styles')
+    @stack('styles') {{---For make push y layout child on styles sheet extern---}}
     <!--css responsive-->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap4.css">
     <!--datatable-->

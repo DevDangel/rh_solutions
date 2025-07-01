@@ -1,6 +1,8 @@
 @extends('admin.dashboard')
-
 @section('title', 'Lista de Usuarios')
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/gestionarUsuario.css') }}">
+@endpush
 @section('content')
 @section('banner')
 @endsection
