@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bdrhsolutionsv2
+-- Host: localhost    Database: rh
 -- ------------------------------------------------------
--- Server version	8.0.42
+-- Server version	9.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -128,7 +128,7 @@ CREATE TABLE `cargos` (
   UNIQUE KEY `cargo` (`cargo`),
   KEY `id_dependencia` (`id_dependencia`),
   CONSTRAINT `cargos_ibfk_1` FOREIGN KEY (`id_dependencia`) REFERENCES `dependencias` (`id_dependencia`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +137,7 @@ CREATE TABLE `cargos` (
 
 LOCK TABLES `cargos` WRITE;
 /*!40000 ALTER TABLE `cargos` DISABLE KEYS */;
-INSERT INTO `cargos` VALUES (1,'Coordinador de recursos humanos',1),(2,'Conductor',2),(3,'Auxiliar de recursos humanos',1),(4,'Médico general',2),(5,'Coordinador médico',2),(6,'Enfermera jefe',3),(7,'Auxiliar de enfermería',3),(8,'Odontólogo',4),(9,'Auxiliar de odontología',4),(10,'Psicólogo clínico',5),(11,'Trabajador social',5),(12,'Fisioterapeuta',6),(13,'Terapista ocupacional',6),(14,'Nutricionista',7),(15,'Bacteriólogo',8),(16,'Técnico en laboratorio clínico',8),(17,'Regente de farmacia',9),(18,'Auxiliar de farmacia',9),(19,'Recepcionista',10),(20,'Técnico en admisión',10),(21,'Auxiliar contable',11),(22,'Auxiliar de facturación',11),(23,'Vigilante',12),(24,'Personal de aseo',12),(25,'Coordinador de calidad',13);
+INSERT INTO `cargos` VALUES (1,'Coordinador de recursos humanos',1),(2,'Conductor',2),(3,'Auxiliar de recursos humanos',1),(4,'Médico general',2),(5,'Coordinador médico',2),(6,'Enfermera jefe',3),(7,'Auxiliar de enfermería',3),(8,'Odontólogo',4),(9,'Auxiliar de odontología',4),(10,'Psicólogo clínico',5),(11,'Trabajador social',5),(12,'Fisioterapeuta',6),(13,'Terapista ocupacional',6),(14,'Nutricionista',7),(15,'Bacteriólogo',8),(16,'Técnico en laboratorio clínico',8),(17,'Regente de farmacia',9),(18,'Auxiliar de farmacia',9),(19,'Recepcionista',10),(20,'Técnico en admisión',10),(21,'Auxiliar contable',11),(22,'Auxiliar de facturación',11),(23,'Vigilante',12),(24,'Personal de aseo',12),(25,'Coordinador de calidad',13),(27,'Ginecologo',6);
 /*!40000 ALTER TABLE `cargos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +224,7 @@ CREATE TABLE `contrato` (
   CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`id_tiemp_contrato`) REFERENCES `tiempo_contrato` (`id_tiemp_contrato`),
   CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`id_est_contrato`) REFERENCES `estado_contrato` (`id_est_contrato`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +233,7 @@ CREATE TABLE `contrato` (
 
 LOCK TABLES `contrato` WRITE;
 /*!40000 ALTER TABLE `contrato` DISABLE KEYS */;
-INSERT INTO `contrato` VALUES (20,'2024-01-01','2024-06-01','trabajar xd','1300000','no quejarse del trabajo xd',1,8,4,2),(21,'2024-06-02','2024-12-31',NULL,'1300000',NULL,1,8,4,2),(22,'2025-01-01',NULL,NULL,'1300000',NULL,2,8,9,1),(23,'2025-01-01',NULL,NULL,'1300000',NULL,1,10,6,1);
+INSERT INTO `contrato` VALUES (20,'2024-01-01','2024-06-01','trabajar xd','1300000','no quejarse del trabajo xd',1,8,4,2),(21,'2024-06-02','2024-12-31',NULL,'1300000',NULL,1,8,4,2),(22,'2025-01-01',NULL,NULL,'1300000',NULL,2,8,9,1),(23,'2025-01-01',NULL,NULL,'1300000',NULL,1,10,6,1),(24,'2025-07-20','2025-08-08','jghuyuuyuyutyu','1300000','iuiyuiyuiyuiyuiyu',3,8,10,3),(25,'2025-07-02','2025-08-08','dddd','1500000','dddd',1,12,6,1);
 /*!40000 ALTER TABLE `contrato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,13 +303,14 @@ CREATE TABLE `documentos` (
   `estado` enum('pendiente','cargado','rechazado') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT 'pendiente',
   `id_usuario` int NOT NULL,
   `id_tip_document` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_documentos`),
-  UNIQUE KEY `nom_documento` (`nom_documento`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_tip_document` (`id_tip_document`),
+  KEY `nom_documento` (`nom_documento`) USING BTREE,
   CONSTRAINT `documentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `documentos_ibfk_2` FOREIGN KEY (`id_tip_document`) REFERENCES `tipo_documento` (`id_tip_document`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,6 +319,7 @@ CREATE TABLE `documentos` (
 
 LOCK TABLES `documentos` WRITE;
 /*!40000 ALTER TABLE `documentos` DISABLE KEYS */;
+INSERT INTO `documentos` VALUES (14,'Hoja de vida','documentos/AUeiRRW4e3Fk2qTCqJHakDGgqPNH1labUEzhNgZk.pdf','2025-06-19 00:00:00','6859ff79937d6','cargado',10,1,'2025-06-24 01:29:29'),(15,'Comprobar','documentos/iqnl6QEzl72vTAPxk11QkEOxuVKMZeS473OJzEgb.xlsx',NULL,'685a00781787e','cargado',8,3,'2025-06-24 01:33:44'),(16,'Certificado de Riesgo','documentos/ifl3YS203e1NKlBtwQNdvEHu4F8MDUiBEMFkZ0GU.pdf',NULL,'685c328d3e292','cargado',9,1,'2025-06-25 17:31:57'),(18,'Licencia','documentos/XgU6oDwMHRU25SpEkHU2u1UNbNsgwWLb2WVCTHo3.docx','2025-07-10 00:00:00','686593115c866','cargado',10,2,'2025-07-02 20:14:09'),(19,'Licencia','documentos/qwRZXi8Z1q2K0moWpJjpagM4YjG3aQziRIUFcbaQ.docx','2025-07-20 00:00:00','6865937adc50b','cargado',8,2,'2025-07-02 20:15:54');
 /*!40000 ALTER TABLE `documentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,7 +342,7 @@ CREATE TABLE `documentos_requeridos` (
   KEY `id_tip_document` (`id_tip_document`),
   CONSTRAINT `documentos_requeridos_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`),
   CONSTRAINT `documentos_requeridos_ibfk_2` FOREIGN KEY (`id_tip_document`) REFERENCES `tipo_documento` (`id_tip_document`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,6 +351,7 @@ CREATE TABLE `documentos_requeridos` (
 
 LOCK TABLES `documentos_requeridos` WRITE;
 /*!40000 ALTER TABLE `documentos_requeridos` DISABLE KEYS */;
+INSERT INTO `documentos_requeridos` VALUES (24,1,'2025-07-02 20:39:22',2,1,'Cédula');
 /*!40000 ALTER TABLE `documentos_requeridos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +507,7 @@ CREATE TABLE `historial_certificados` (
 
 LOCK TABLES `historial_certificados` WRITE;
 /*!40000 ALTER TABLE `historial_certificados` DISABLE KEYS */;
-INSERT INTO `historial_certificados` VALUES (14,23,'embarazo','2025-06-11 18:52:25'),(15,20,'certificado','2025-06-11 18:54:48'),(16,21,'certificado','2025-06-11 18:54:51'),(17,22,'Holanda','2025-06-23 19:59:03');
+INSERT INTO `historial_certificados` VALUES (14,23,'embarazo','2025-06-11 18:52:25'),(15,20,'certificado','2025-06-11 18:54:48'),(16,21,'certificado','2025-06-11 18:54:51'),(17,24,'probar','2025-07-02 20:20:59');
 /*!40000 ALTER TABLE `historial_certificados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,7 +618,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -624,7 +627,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1);
+INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2025_06_24_011101_add_created_at_to_documentos_table',2),(5,'2025_06_24_012425_add_updated_at_to_documentos_table',3);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -754,7 +757,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('WHBourLE3b7GJVvOIFWRYJokv59I7SbW49eXFjXW',7,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUWw2cFV2OVdjaTV4ZDM5NDZtdFQxQmJ6YmJPQ2ZaM2YzdFdKc3o4eCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9taS1wZXJmaWwtYWRtaW4iO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozODoiaHR0cDovL3JoX3NvbHV0aW9ucy50ZXN0L211bmljaXBpb3MvMjMiO319',1750826861);
+INSERT INTO `sessions` VALUES ('exYcIMx6zIvbrVVtNIM8P2jA3V3eMe5ggF81YisT',8,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo1OntzOjY6Il90b2tlbiI7czo0MDoiZDlHbWZhNmNlZlJBbmRhRE80bVdzbzJkVVFERjE3OEZVdUdNcGJXayI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9kb2N1bWVudG9zIjt9czo1NDoibG9naW5fdXN1YXJpb181OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjg7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozNzoiaHR0cDovL3JoX3NvbHV0aW9ucy50ZXN0L211bmljaXBpb3MvMSI7fX0=',1751489225),('lzQBidfVEEqgXuHK99N0Mq5U6fJ05MP2MpTneKYB',7,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOUo3RDU0S1lQWHdCNzBWbWRaUDZyYms4QVl4U3I3bjd1Y2pHRXdhZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9yaF9zb2x1dGlvbnMudGVzdC9jYXJnb3MiO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7fQ==',1751489836),('Pz9DWKhYWnyuVEOYgGlJAOsAXzrGuxQA9NAb98se',7,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo2OntzOjY6Il90b2tlbiI7czo0MDoicDZ5YnhVejdzZGxjYWdVZFo3dW5OMHJtSHFJZHluR21LNk1TUGJwTSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9tdW5pY2lwaW9zLWFkbWluLzEiO31zOjU0OiJsb2dpbl91c3VhcmlvXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6ODtzOjM6InVybCI7YToxOntzOjg6ImludGVuZGVkIjtzOjUyOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vdmlzdWFsaXphY2lvbi1kb2N1bWVudG9zIjt9czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo3O30=',1751485691),('wUgQNkK6Fqs6lvTwhoS6ZhvyZlDkaPUdxDgxMlPg',10,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0','YTo0OntzOjY6Il90b2tlbiI7czo0MDoid3RkMjE3WHI0eUYwNktQZGIxU041emU1dkhtSkhMOVh1aktoQmZVSiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kb2N1bWVudG9zIjt9czo1NDoibG9naW5fdXN1YXJpb181OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwO30=',1751482395);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -781,7 +784,7 @@ CREATE TABLE `solicitud_certificado` (
 
 LOCK TABLES `solicitud_certificado` WRITE;
 /*!40000 ALTER TABLE `solicitud_certificado` DISABLE KEYS */;
-INSERT INTO `solicitud_certificado` VALUES (15,20,'certificado'),(16,21,'certificado'),(17,23,'embarazo'),(18,22,'Holanda');
+INSERT INTO `solicitud_certificado` VALUES (15,20,'certificado'),(16,21,'certificado'),(17,23,'embarazo'),(18,24,'probar');
 /*!40000 ALTER TABLE `solicitud_certificado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -847,7 +850,7 @@ CREATE TABLE `tipo_documento` (
   `nom_tip_document` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id_tip_document`),
   UNIQUE KEY `nom_tip_document` (`nom_tip_document`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -856,7 +859,7 @@ CREATE TABLE `tipo_documento` (
 
 LOCK TABLES `tipo_documento` WRITE;
 /*!40000 ALTER TABLE `tipo_documento` DISABLE KEYS */;
-INSERT INTO `tipo_documento` VALUES (1,'PDF');
+INSERT INTO `tipo_documento` VALUES (3,'Excel'),(1,'PDF'),(2,'Word');
 /*!40000 ALTER TABLE `tipo_documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -904,7 +907,7 @@ CREATE TABLE `usuarios` (
   `pri_nombre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `seg_nombre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `pri_apellido` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `seg_apellido` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `seg_apellido` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `fec_nacimiento` date NOT NULL,
   `tip_sangre` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `sex_usuario` enum('Masculino','Femenino') CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -924,7 +927,7 @@ CREATE TABLE `usuarios` (
   `id_arl` int NOT NULL,
   `id_caj_compen` int NOT NULL,
   `id_profesion` int NOT NULL,
-  `img_perfil` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT 'imgs/default.jpg',
+  `img_perfil` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT 'imgs/default.jpg',
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `doc_usuario` (`doc_usuario`),
   UNIQUE KEY `correo_usuario` (`correo_usuario`),
@@ -954,7 +957,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (7,'123456789','CC','Sara','Sofía','Rodríguez','Hernández','1990-05-15','O+','Femenino','Separado(a)','calle 100 villa marina','3143191393','3206634567','sarisofia011@gmail.com','RP-00123','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,1,1,1,1,1,1,'imgs/default.jpg'),(8,'1104940128','CC','Angel','Arturo','Herrera','Hernández','1990-05-15','O+','Masculino','Casado(a)','Manzana E casa Villa María','3204777777','3201244467','angeldavidh18@gmail.com','1119592875','$2y$12$mb3CF8TK2w81lzQUV9OqN.4NctxAh7JWHPRmJxOL3xQoAYejF/KgS',23,959,1,2,1,1,1,1,2,'imgs/default.jpg'),(9,'1110592875','CC','Angel','David','Herrera','Acevedo','1998-09-01','B+','Masculino','Soltero(a)','Manzana E casa 2','3016755558','3144487664','seniorherreraangel@gmail.com','1110592875','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,9,3,2,3,4,1,'imgs/default.jpg'),(10,'1012345678','CC','Luisa','Fernanda','Lasso ','Méndez','1990-05-15','A+','Masculino','Soltero(a)','Calle 23 #45','3101234567','3107654321','ssrodriguezh@ut.edu.co','REG1234','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,7,14,5,3,8,19,3,'imgs/default.jpg'),(11,'1012345679','CC','María','Isabel','López','Martínez','1988-11-20','O+','Femenino','Casado(a)','Carrera 15 #7-10','3109876543','3103456789','maria.lopez@mail.com','REG5678','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,2,22,2,4,5,11,7,'imgs/default.jpg'),(12,'1012345680','CC','Juan','Carlos','Pérez','Rodríguez','1992-07-08','B-','Masculino','Divorciado(a)','Av. Las Flores #9','3112345678','3118765432','juan.perez@mail.com','REG9101','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,9,19,1,5,7,2,4,'imgs/default.jpg'),(13,'1012345681','CC','Catalina','María','González','Suárez','1995-01-10','AB+','Femenino','Soltero(a)','Calle 45 #22','3102223333','3104445555','catalina.gonzalez@mail.com','REG1121','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,3,7,6,2,4,25,1,'imgs/default.jpg'),(14,'1012345682','CC','Luis','Fernando','Morales','Castro','1987-09-30','A-','Masculino','Casado(a)','Cra 10 #5-15','3111112222','3113334444','luis.morales@mail.com','REG3141','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,6,10,9,1,3,9,5,'imgs/default.jpg'),(15,'1012345683','CC','Valentina','Sofía','Ramírez','Vargas','1993-03-25','O-','Femenino','Divorciado(a)','Calle 7 #33','3105556666','3107778888','valentina.ramirez@mail.com','REG5161','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,8,16,4,3,2,14,6,'imgs/default.jpg'),(16,'1012345684','CC','David','Alejandro','Hernández','Salazar','1991-12-12','B+','Masculino','Soltero(a)','Av. 20 #8','3119990000','3118887777','david.hernandez@mail.com','REG7181','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,5,23,7,5,9,5,2,'imgs/default.jpg'),(17,'1012345685','CC','Juliana','Fernanda','Torres','Ramírez','1989-08-08','AB-','Femenino','Casado(a)','Carrera 11 #3-20','3103332222','3104443333','juliana.torres@mail.com','REG9202','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,25,3,4,6,12,8,'imgs/default.jpg'),(18,'1012345686','CC','Santiago','Andrés','Castillo','Mendoza','1994-06-18','A+','Masculino','Soltero(a)','Calle 30 #14','3111212121','3113434343','santiago.castillo@mail.com','REG1222','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,4,21,8,1,1,1,7,'imgs/default.jpg'),(19,'1012345687','CC','Laura','Beatriz','Ruiz','Ochoa','1990-10-05','O+','Femenino','Divorciado(a)','Av. Central #10','3104545454','3106767676','laura.ruiz@mail.com','REG3242','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,10,12,10,2,10,24,4,'imgs/default.jpg'),(20,'2222222222','CC','Arturo',NULL,'Montana',NULL,'2000-01-01','B+','Masculino','Soltero(a)','Manzan e casa 2','3144487664','3144487664','mario@gmail.com','1110592875','User12345$',23,959,1,2,4,4,9,29,3,'imgs/default.jpg'),(21,'3333333333','CC','Altor',NULL,'Zur',NULL,'1998-01-01','B+','Masculino','Soltero(a)','Calle las plamas','3202897871','3144487664','altorzur@gmail.com','1110592875','User12345$',1,1,1,10,12,4,5,22,6,'imgs/default.jpg');
+INSERT INTO `usuarios` VALUES (7,'123456789','CC','Sara','Sofía','Rodríguez','Hernández','1990-05-15','O+','Femenino','Divorciado(a)','Cra 12 #34-56','3143191393','3201234567','sarisofia011@gmail.com','123456789','$2y$12$u5VDrO5zmpGscU9qYZ3UBuIxR7t76wj6EKbLIRGghLX1ed1kuA1DC',12,596,1,1,1,1,1,1,1,'storage/imgs/ldQpkSOJHALbrQwwmJUwZVZZLcJN6LiIbhkGEgWF.jpg'),(8,'1104940128','CC','Angel','Arturo','Herrera','Hernández','1990-05-15','O+','Femenino','Soltero(a)','Cra 12 #34-56','3204567789','3201234567','angeldavidh18@gmail.com',NULL,'$2y$12$mZueMJDR/OpZ4qoLuKcfy.hp./NgatOZFICJFRapOQxEV.LjwrHze',1,1,1,2,1,1,1,1,2,'imgs/default.jpg'),(9,'1110592875','CC','Angel','David','Herrera','Acevedo','1998-09-01','B+','Masculino','Soltero(a)','Manzana E casa 2','3016755558','3144487664','seniorherreraangel@gmail.com','1110592875','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',1,1,1,9,3,2,3,4,1,'imgs/default.jpg'),(10,'1012345678','CC','Luisa','Fernanda','Lasso ','Méndez','1990-05-15','A+','Masculino','Soltero(a)','Calle 23 #45','3101234567','3107654321','ssrodriguezh@ut.edu.co','REG1234','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,7,14,5,3,8,19,3,'imgs/default.jpg'),(11,'1012345679','CC','María','Isabel','López','Martínez','1988-11-20','O+','Femenino','Casado(a)','Carrera 15 #7-10','3109876543','3103456789','maria.lopez@mail.com','REG5678','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,2,22,2,4,5,11,7,'imgs/default.jpg'),(12,'1012345680','CC','Juan','Carlos','Pérez','Rodríguez','1992-07-08','B-','Masculino','Divorciado(a)','Av. Las Flores #9','3112345678','3118765432','juan.perez@mail.com','REG9101','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,9,19,1,5,7,2,4,'imgs/default.jpg'),(13,'1012345681','CC','Catalina','María','González','Suárez','1995-01-10','AB+','Femenino','Soltero(a)','Calle 45 #22','3102223333','3104445555','catalina.gonzalez@mail.com','REG1121','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,3,7,6,2,4,25,1,'imgs/default.jpg'),(14,'1012345682','CC','Luis','Fernando','Morales','Castro','1987-09-30','A-','Masculino','Casado(a)','Cra 10 #5-15','3111112222','3113334444','luis.morales@mail.com','REG3141','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,6,10,9,1,3,9,5,'imgs/default.jpg'),(16,'1012345684','CC','David','Alejandro','Hernández','Salazar','1991-12-12','B+','Masculino','Soltero(a)','Av. 20 #8','3119990000','3118887777','david.hernandez@mail.com','REG7181','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,5,23,7,5,9,5,2,'imgs/default.jpg'),(17,'1012345685','CC','Juliana','Fernanda','Torres','Ramírez','1989-08-08','AB-','Femenino','Casado(a)','Carrera 11 #3-20','3103332222','3104443333','juliana.torres@mail.com','REG9202','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,1,25,3,4,6,12,8,'imgs/default.jpg'),(18,'1012345686','CC','Santiago','Andrés','Castillo','Mendoza','1994-06-18','A+','Masculino','Soltero(a)','Calle 30 #14','3111212121','3113434343','santiago.castillo@mail.com','REG1222','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,4,21,8,1,1,1,7,'imgs/default.jpg'),(19,'1012345687','CC','Laura','Beatriz','Ruiz','Ochoa','1990-10-05','O+','Femenino','Divorciado(a)','Av. Central #10','3104545454','3106767676','laura.ruiz@mail.com','REG3242','$2y$12$6Si3TFX6DlAytpDMnaq62Of49vcUpr0Xw0FPhx4qh0bddddjUiHia',23,959,10,12,10,2,10,24,4,'imgs/default.jpg'),(21,'65773008','CC','Claudia',NULL,'Acevedo','Herrera','1978-02-12','B-','Femenino','Casado(a)','Villa maria calle','3144487664','3016755558','cenybb@gmail.com','123456789','$2y$12$ErJOqhuQ9NG5/7i7N2xqW.WrsWEqkzG5jY50.6piLA9Q7tdaahOBC',23,959,1,25,1,2,7,17,5,'imgs/default.jpg');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -967,4 +970,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-24 23:49:49
+-- Dump completed on 2025-07-02 16:57:23
