@@ -13,6 +13,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuarioAuthController;
 use App\Http\Controllers\Usuario\SolicitarController;
 use App\Http\Controllers\Admin\SolicitudController;
+use App\Http\Controllers\Admin\DocumentoAsignacionController;
+use App\Http\Controllers\Admin\VisualizarDocumentosController;
+use App\Http\Controllers\Usuario\DocumentoController;
+
+
 
 
 
@@ -44,7 +49,14 @@ Route::middleware('auth:usuario')->group(function () {
     Route::get('/solicitar', [SolicitarController::class, 'listarContratos'])->name('user.solicitar');
     Route::post('/usuario/solicitar-certificado', [SolicitarController::class, 'guardarSolicitud'])->name('usuario.solicitar');
 
-    //-------------------------------------------------------------------------------------------//
+    //--------------------------------Documentos---------------------------------------//
+
+    Route::get('/documentos', [DocumentoController::class, 'index'])->name('usuario.documentos.index');
+    Route::post('/usuario/documentos/upload', [DocumentoController::class, 'upload'])->name('usuario.documentos.upload');
+    Route::delete('/usuario/documentos/eliminar/{id}', [DocumentoController::class, 'eliminar'])->name('usuario.documentos.eliminar');
+    Route::put('/usuario/documentos/actualizar/{id}', [DocumentoController::class, 'actualizarFecha'])->name('usuario.documentos.actualizarFecha');
+
+
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,5 +122,24 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/historial-certificados',[HistorialController::class,'view'])->name('admin.historial');
     Route::get('/admin/ver-certificado/{id_contrato}', [HistorialController::class, 'verCertificado'])->name('admin.verCertificado');
     //-----------------------------------------------------------------------------------------------------------------------//
+
+    // --------------------------------- rutas para Asignar Documentos --------------------------------------------------//
+
+    Route::get('/documentos/asignar', [DocumentoAsignacionController::class, 'index'])->name('admin.documentos.index');
+    Route::post('/documentos/asignar', [DocumentoAsignacionController::class, 'asignarDocumentos'])->name('admin.guardar.documentos');
+    Route::put('/documentos/asignados/{id}', [DocumentoAsignacionController::class, 'actualizarDocumento'])->name('admin.actualizar.documento');
+
+    Route::delete('/documentos/asignados/{id}', [DocumentoAsignacionController::class, 'eliminarDocumento'])->name('admin.eliminar.documento');
+    //-----------------------------------------------------------------------------------------------------------------------//
+
+    // --------------------------------- rutas para Visualizar Documentos --------------------------------------------------//
+    Route::get('/admin/visualizacion-documentos', [VisualizarDocumentosController::class, 'visualizarDocumentos'])->name('admin.visualizacion.documentos');
+    //-----------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+
+
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

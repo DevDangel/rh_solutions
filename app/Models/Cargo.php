@@ -14,6 +14,11 @@ class Cargo extends Model
 
     }
 
+    public function documentosRequeridos()
+    {
+        return $this->hasMany(DocumentosRequeridos::class, 'id_cargo');
+    }
+
     protected $table = 'cargos';
 
     protected $primaryKey='id_cargo';

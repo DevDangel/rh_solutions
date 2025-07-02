@@ -55,7 +55,7 @@
                         </a>
                         <div class="collapse ms-5" id="submenuDocumentos">
                             <ul class="list-unstyled">
-                                <li><a class="nav-link px-0" href="#"><i class="fas fa-eye me-2"></i>Visualización de Documentos</a></li>
+                                <li><a class="nav-link px-0" href="{{ route('usuario.documentos.index') }}"><i class="fas fa-eye me-2"></i>Visualización de Documentos</a></li>
                             </ul>
                         </div>
                     </li>

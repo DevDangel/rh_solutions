@@ -77,4 +77,13 @@ public function municipio(){
 public function profesiones(){
     return $this->belongsTo(Profesion::class,'id_profesion','id_profesion');
 }
+
+public function documentos()
+{
+    return $this->hasMany(Documento::class, 'id_usuario');
+}
+
+public function documentosRequeridos() {
+    return $this->hasManyThrough(DocumentosRequeridos::class, Cargo::class, 'id_cargo', 'id_cargo', 'id_cargo', 'id_cargo');
+}
 }

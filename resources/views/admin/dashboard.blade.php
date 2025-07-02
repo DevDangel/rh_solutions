@@ -77,8 +77,8 @@
                         </a>
                         <div class="collapse ms-5" id="submenuDocumentos">
                             <ul class="list-unstyled">
-                                <li><a class="nav-link px-0" href="#"><i class="fas fa-file-export me-2"></i>Asignación de Documentos</a></li>
-                                <li><a class="nav-link px-0" href="#"><i class="fas fa-eye me-2"></i>Visualización de Documentos</a></li>
+                                <li><a class="nav-link px-0" href="{{ route('admin.documentos.index') }}"><i class="fas fa-file-export me-2"></i>Asignación de Documentos</a></li>
+                                <li><a class="nav-link px-0" href="{{route('admin.visualizacion.documentos')}}"><i class="fas fa-eye me-2"></i>Visualización de Documentos</a></li>
                                 <li><a class="nav-link px-0" href="#"><i class="fas fa-file-alt me-2"></i>Mis Documentos</a></li>
                             </ul>
                         </div>

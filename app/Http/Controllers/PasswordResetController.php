@@ -131,8 +131,19 @@ class PasswordResetController extends Controller
     public function updatePassword(Request $request)
     {
         $request->validate([
-            'identificacion' => 'required|string',
-            'password' => 'required|confirmed|min:6',
+            'password' => [
+            'required',
+            'confirmed',
+            'min:8',
+            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&.]).+$/', // al menos un carácter especial
+            ],
+
+            ], [
+
+                'password.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y un símbolo.',
+                'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+                'password.confirmed' => 'Las contraseñas no coinciden.',
+
         ]);
 
         $user = Usuario::where('doc_usuario', $request->identificacion)->first();
@@ -150,6 +161,12 @@ class PasswordResetController extends Controller
 
         session()->forget(['cedula', 'email']);
 
+        Mail::send('auth.passwords.passwordUpdated', [], function ($message) use ($user) {
+            $message->to($user->correo_usuario)
+            ->subject('Tu contraseña ha sido actualizada');
+        });
+
         return redirect('/')->with('status', 'Contraseña actualizada correctamente.');
     }
+
 }
