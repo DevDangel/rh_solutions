@@ -12,7 +12,7 @@ class SolicitarController extends Controller
 {
     //
     public function listarContratos() {
-        $usuarioId = Auth::user()->id_usuario;
+        $usuarioId = Auth::user()->id_usuario; // identifica que usario cargo esa vista 
         // Obtener contratos del usuario
         $contratos = Contrato::where('id_usuario', $usuarioId)
                     ->with(['tipoContrato'])
@@ -24,7 +24,7 @@ class SolicitarController extends Controller
                           ->toArray();
         return view('user.solicitar', compact('contratos', 'solicitudesRecientes'));
     }
-    
+
     public function guardarSolicitud(Request $request){
         $contratos = json_decode($request->contratos_seleccionados, true);
         $motivos = json_decode($request->motivos, true);

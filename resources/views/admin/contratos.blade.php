@@ -1,6 +1,12 @@
 @extends('admin.dashboard')
 @section('title', 'Contratos')
+@push('styles')
+    <link rel="stylesheet" href="{{asset('css/contratos.css')}}">
+    <link rel="stylesheet" href="{{asset('css/solicitud.css')}}">
+@endpush
 @section('content')
+@section('banner')
+@endsection
 {{--MENSAJE DE EXITO AL CREAR Y ERRO--}}
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" style="position: absolute;z-index:100000">
@@ -66,12 +72,12 @@
                             Editar
                         </button>
                         <!-- Botón Eliminar -->
-                        <button class="btn btn-danger btn-sm"
+                       {{-- <button class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalEliminarContrato"
                                 data-id="{{ $contrato->id_contrato }}">
                             Eliminar
-                        </button>
+                        </button> ESTE ES PARA TENER EN CUENTA ---}}
                     </td>
                 </tr>
                 @endforeach
@@ -82,7 +88,7 @@
 
 <!-- MODAL PARA CREAR CONTRATO -->
 <div class="modal fade" id="modalCrearContrato" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header custom-header text-white">
                 <h5 class="modal-title">Crear Nuevo Contrato</h5>
@@ -95,9 +101,19 @@
                         <div class="col-md-6">
                             <label class="form-label" for="InputNum_documen">Documento<span class="asterisco-rojo">*</span></label>
                             <input type="text" name="doc_usuario" class="form-control" required pattern="^[0-9]{7,10}$"
-                                placeholder="Digite 7 a 10 dígitos" id="InputNum_documen">
+                                placeholder="Digite 7 a 10 dígitos" id="InputNum_documen" maxlength="10">
+                            <small id="crearDocumentoError" class="mensaje-error text-danger" style="display: none;"></small>
                         </div>
-
+                        {{---NUEVOS INPUTS TRAER NOMBRE COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input type="text" name="nombre_completo" class="form-control bg-light" readonly id="nombre">
+                        </div>
+                        {{---NUEVOS INPUTS TRAER APELLIDO COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="apellido">Apellido</label>
+                            <input type="text" name="apellido_completo" class="form-control bg-light" readonly id="apellido">
+                        </div>
                         <div class="col-md-6">
                             <label for="InputTipo_contrato" class="form-label" style="color: black">Tipo de contrato
                                 <span class="asterisco-rojo">*</span>
@@ -123,19 +139,19 @@
 
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="InputFecha_ingreso" style="color: black" class="form-label">Fecha de ingreso
+                                <label for="fecha_ingreso" style="color: black" class="form-label">Fecha de ingreso
                                     <span class="asterisco-rojo">*</span>
                                 </label>
                                 <input type="date" class="form-control" name="fec_inicio" required
-                                    value="">
+                                    value="" id="fecha_ingreso">
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="InputFecha_finalizacion" style="color: black" class="form-label">Fecha de finalización</label>
-                                <input type="date" class="form-control" name="fec_final"
-                                    value="">
+                                <label for="fecha_finalizacion" style="color: black" class="form-label">Fecha de finalización</label>
+                                <input type="date" class="form-control" name="fec_final" value="" id="fecha_finalizacion">
+                                <small id="fechaError" class="mensaje-error text-danger" style="display: none;"></small>
+
                             </div>
                         </div>
 
@@ -172,14 +188,14 @@
                         </div>
                         <div class="col-mb-3">
                             <div class="mb-3">
-                                <label for="InputCondiciones" class="form-label" style="color: black">Clausulas</label>
+                                <label for="InputClausulas" class="form-label" style="color: black">Clausulas</label>
                                 <textarea class="form-control" name="clausulas" id="InputClausulas" rows="5"
                                     placeholder="Ingrese las condiciones aquí"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 b-flex justify-content-start">
-                        <button type="submit" class="btn btn-custom btn" name="btncrearcontrato" value="1">Crear contrato</button>
+                        <button type="submit" class="btn btn-custom btn" name="btncrearcontrato" value="1" id="btnCrear">Crear contrato</button>
                         <button type="button" class="btn btn-custom btn" data-bs-dismiss="modal" onclick="resetForm()">Cancelar edición</button>
                     </div>
                 </form>
@@ -193,9 +209,9 @@
 <div class="modal fade" id="modalEditarContrato" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
+            <div class="modal-header custom-header text-white">
                 <h5 class="modal-title">Editar Contrato</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('contrato.update', ['id' => 'ID_DEL_CONTRATO']) }}">
@@ -205,9 +221,19 @@
                         <div class="col-md-6">
                             <label class="form-label" for="editInputNum_documen">Documento<span class="asterisco-rojo">*</span></label>
                             <input type="text" name="doc_usuario" class="form-control" required pattern="^[0-9]{7,10}$"
-                                placeholder="Digite 7 a 10 dígitos" id="editInputNum_documen">
+                                placeholder="Digite 7 a 10 dígitos" id="editInputNum_documen" maxlength="10">
+                            <small id="editDocumentoError" class="mensaje-error text-danger" style="display: none;"></small>
                         </div>
-
+                        {{---NUEVOS INPUTS TRAER NOMBRE COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input type="text" name="nombre_completo" class="form-control bg-light" readonly id="edit_nombre">
+                        </div>
+                        {{---NUEVOS INPUTS TRAER APELLIDO COMPLETO DE LA BD SEGUN EL DOCUMENTO---}}
+                        <div class="col-md-6">
+                            <label class="form-label" for="apellido">Apellido</label>
+                            <input type="text" name="apellido_completo" class="form-control bg-light" readonly id="edit_apellido">
+                        </div>
                         <div class="col-md-6">
                             <label for="editInputTipo_contrato" class="form-label" style="color: black">Tipo de contrato
                                 <span class="asterisco-rojo">*</span>
@@ -245,6 +271,8 @@
                                 <label for="editInputFecha_finalizacion" style="color: black" class="form-label">Fecha de finalización</label>
                                 <input type="date" class="form-control" name="fec_final"
                                     value="" id="editInputFecha_finalizacion">
+                                <small id="editFechaError" class="mensaje-error text-danger" style="display: none;"></small>
+
                             </div>
                         </div>
 
@@ -289,8 +317,8 @@
                     </div>
 
                     <div class="modal-footer mt-3">
-                        <button type="submit" class="btn btn-success">Actualizar Contrato</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-custom" id="btnActualizar">Actualizar Contrato</button>
+                        <button type="button" class="btn btn-secondary btn-custom" data-bs-dismiss="modal" id="btnCancelar">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -323,9 +351,9 @@
     </div>
 </div>
  <!-- JavaScript bundle with popper -->
-@endsection
+
 @push('scripts')
-    <script src="{{ asset('js/certificados.js')}}"></script>
+    <script src="{{ asset('js/contratos.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#tablaContratos').DataTable({
@@ -352,7 +380,6 @@
             });
         });
     </script>
-    @push('scripts')
 <script>
 $('#modalEditarContrato').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget);
@@ -372,7 +399,8 @@ $('#modalEditarContrato').on('show.bs.modal', function (event) {
             $('#editInputEst_contrato').val(response.contrato.id_est_contrato);
             $('#editFunciones').val(response.contrato.funciones);
             $('#editClausulas').val(response.contrato.clausulas);
-
+            $('#edit_nombre').val(response.nombre_completo);
+            $('#edit_apellido').val(response.apellido_completo);
             // Asegurar que el formulario apunte a la ruta correcta
             $('#modalEditarContrato form').attr('action', '/contrato/update/' + id);
         },
@@ -413,3 +441,4 @@ $('#modalEditarContrato').on('show.bs.modal', function (event) {
         });
 </script>
 @endpush
+@endsection

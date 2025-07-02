@@ -48,7 +48,6 @@ class SolicitudController extends Controller
 
             $estadoLaboral = $solicitud->contrato->fec_finalizacion === null ? 'Labora' :
             ($solicitud->contrato->fec_finalizacion < now('America/Bogota') ? 'Laboró' : 'Labora');
-            
             $cargo = $usuario->cargo ? $usuario->cargo->cargo : 'Sin cargo registrado';
             $tipoContrato = $solicitud->contrato->tipoContrato->nom_contrato ?? 'Sin tipo de contrato';
             $tiempoContrato = $solicitud->contrato->tiempoContrato->nom_tiemp_contrato ?? 'Sin tiempo de contrato';

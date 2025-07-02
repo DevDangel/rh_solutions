@@ -18,13 +18,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/646ac4fad6.js" crossorigin="anonymous"></script>
      <!-- CSS externo -->
-    <link rel="stylesheet" href= "{{asset('css/solicitar.css')}}" >
-
+    @stack('styles')
     <!-- Bootstrap y DataTables (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 </head>
-
 <body>
     <!-- Menú Lateral (Versión Usuario) -->
     <div class="sidebar">
@@ -42,7 +40,7 @@
         <div class="sidebar-nav d-flex flex-column h-100">
             <ul class="nav flex-column flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{{route('usuario.dashboard')}}">
                         <i class="fas fa-home me-2"></i> Inicio
 
                     </a>
@@ -118,10 +116,11 @@
                 <span class="me-2 fw- fs-5 text-dark">{{ Auth::guard('usuario')->user()->pri_nombre . ' ' . Auth::guard('usuario')->user()->pri_apellido }}
 
                 </span>
-                <i class="fas fa-user-circle fa-2x text-primary"></i>
+                <img src="{{ asset(Auth::guard('usuario')->user()->img_perfil ?? 'imgs/default.jpg') }}" alt="Foto de perfil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="{{route('perfil')}}">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Configuración</a></li>
                 <li>
                     <hr class="dropdown-divider">
@@ -139,6 +138,9 @@
     <h1 class="mb-4"></h1>
     <!--contenido-->
     <div class="main-content ">
+        @section('banner')
+            <img src="{{ asset('imgs/rh19.png') }}" alt="" width="100%" style="padding: 10%;">
+        @show
         @yield('content')
     </div>
     <!-- Tarjetas (Contenido de la primera imagen) -->
@@ -157,10 +159,6 @@
             sidebar.classList.remove('active');
         });
     </script>
-
-
-
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')

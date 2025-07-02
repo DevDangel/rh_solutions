@@ -80,7 +80,7 @@ class ContratoController extends Controller
         }
     }
 
-     // Mostrar datos para editar (llamado via AJAX)
+     // Mostrar datos para editar (llamado via AJAX) en los inputs
     public function edit($id){
         $contrato = Contrato::with(['usuario', 'tipoContrato', 'tiempoContrato', 'estadoContrato'])
                     ->findOrFail($id);
@@ -88,12 +88,16 @@ class ContratoController extends Controller
         $tiposContrato = TipoContrato::orderBy('id_tip_contrato')->get();
         $tiemposContrato = TiempoContrato::orderBy('id_tiemp_contrato')->get();
         $estadoContrato = EstadoContrato::orderBy('id_est_contrato')->get();
-
+        // Obtener nombre y apellido completo del usuario
+        $nombre = trim("{$contrato->usuario->pri_nombre} {$contrato->usuario->seg_nombre}");
+        $apellido = trim("{$contrato->usuario->pri_apellido} {$contrato->usuario->seg_apellido}");
         return response()->json([
             'contrato' => $contrato,
             'tipos' => $tiposContrato,
             'tiempos' => $tiemposContrato,
-            'estados' => $estadoContrato
+            'estados' => $estadoContrato,
+            'nombre_completo' =>$nombre,
+            'apellido_completo' => $apellido
         ]);
     }
     // Actualizar contrato existente
@@ -143,6 +147,18 @@ class ContratoController extends Controller
             return redirect()->route('admin.contratos')->with('success', 'Contrato eliminado correctamente.');
         } catch (\Exception $e) {
             return redirect()->route('admin.contratos')->with('error', 'Error al eliminar contrato: ' . $e->getMessage());
+        }
+    }
+    public function verificarDocumento(Request $request){
+        $usuario =Usuario::where('doc_usuario', $request -> doc_usuario) ->first();
+        if($usuario){
+            return response() -> json([
+                'existe' =>true,
+                'nombre_completo' => trim("{$usuario->pri_nombre} {$usuario ->seg_nombre}"),
+                'apellido_completo' => trim("{$usuario->pri_apellido} {$usuario ->seg_apellido}")
+            ]);
+        }else{
+            return response() -> json(['existe',false]);
         }
     }
 

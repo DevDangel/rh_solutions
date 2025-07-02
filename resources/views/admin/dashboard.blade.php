@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') Panel de Usuario - RH Solutions</title>
+    <title>@yield('title') Panel del Admin - RH Solutions</title>
     {{---michels---}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Enlace a css externo -->
-    <link rel="stylesheet" href="{{ asset('css/gestionarUsuario.css') }}">
-    <link rel="stylesheet" href="{{asset('css/solicitud.css')}}">
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
-    <link rel="stylesheet" href="{{asset('css/contratos.css')}}">
+    @stack('styles') {{---For make push y layout child on styles sheet extern---}}
     <!--css responsive-->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap4.css">
     <!--datatable-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    {{-- SE deja esta hoja de estilo comentada poner a prueba si es que sirve para algo ----}}
+   {{--- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> ---}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
     {{---michels---}}
@@ -62,7 +61,7 @@
                             <div class="collapse ms-5" id="submenuUsuarios">
                                 <ul class="list-unstyled">
                                     <li><a class="nav-link px-0" href="{{route('crud.index')}}"><i class="fas fa-eye me-2"></i> Lista de usuarios</a></li>
-                                    <li><a class="nav-link px-0" href="#"><i class="fas fa-user-plus me-2"></i> Agregar cargo</a></li>
+                                    <li><a class="nav-link px-0" href="{{route('cargos.admin')}}"><i class="fas fa-user-plus me-2"></i> Agregar cargo</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -154,10 +153,10 @@
             <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button"
                 id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-2 fw- fs-5 text-dark">{{ Auth::guard('admin')->user()->pri_nombre . ' ' . Auth::guard('admin')->user()->pri_apellido }}</span>
-                <i class="fas fa-user-circle fa-2x text-primary"></i>
+                <img src="{{ asset(Auth::guard('admin')->user()->img_perfil ?? 'imgs/default.jpg') }}" alt="Foto de perfil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="{{route('perfilAdmin')}}">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Configuración</a></li>
                 <li>
                     <hr class="dropdown-divider">
@@ -172,11 +171,23 @@
     <h1 class="mb-4"></h1>
     <!--contenido-->
     <div class="main-content ">
+        @section('banner')
+            <img src="{{ asset('imgs/rh19.png') }}" alt="" width="100%" style="padding: 10%;">
+        @show
         @yield('content')
     </div>
     <!-- Tarjetas (Contenido de la primera imagen) -->
 
-    <!--javascript para el boton para abrir el menu-->
+
+    <!-- Bootstrap JS -->
+     <!-- Incluir jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/646ac4fad6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    @stack('scripts')
+     <!--javascript para el boton para abrir el menu-->
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const closeBtn = document.getElementById('closeSidebar');
@@ -190,15 +201,7 @@
             sidebar.classList.remove('active');
         });
     </script>
-    <!-- Bootstrap JS -->
-     <!-- Incluir jQuery y Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/646ac4fad6.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    @stack('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

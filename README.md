@@ -7,18 +7,17 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Michael : estos comandos son para cuando clone el repositorio
+## Para  todos: estos comandos son para cuando clone el repositorio
 
 composer install
 
-
 cp .env.example .env
-
 
 php artisan key:generate
 
-
 php artisan migrate
+
+hacer php artisan storage:link // para crear las rutas 
 
 ## About Laravel
 

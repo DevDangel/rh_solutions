@@ -1,7 +1,12 @@
 @extends('admin.dashboard')
-
 @section('title', 'Solicitudes')
+@push('styles')
+   <link rel="stylesheet" href="{{asset('css/solicitud.css')}}">
+@endpush
 @section('content')
+@section('banner')
+@endsection
+
 <div class="container  table-custom">
         <div class="card mb-4">
             <div class="card-header py-3">
@@ -104,6 +109,5 @@
         }
     });
 </script>
-
 @endpush
 @endsection

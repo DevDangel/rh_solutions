@@ -25,36 +25,38 @@
     filter: invert(1); /* Convierte el color a blanco */
 }
 
+/*Para que no se pueda seleccionar el boton */
+#btnCrear[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 
 /* Estilo para el botón de actualizar */
-#btnActualizar {
-    position: relative;
-    top: 471px;
-    left: 540px;
-    background-color: rgb(6, 4, 46);
-    /* Azul */
-    color: white;
-    /* Texto blanco */
-    border: none;
-    padding: 8px 0px;
-    /* Espaciado interior */
-    font-size: 15px;
-    border-radius: 5px;
-    /* Bordes redondeados */
-    font-weight: bold;
-    cursor: pointer;
-    /* Cambia el cursor a mano cuando pase sobre el botón */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    /* Efectos de transición */
-    width: 160px;
-    z-index: 10050;
 
+
+#btnActualizar[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-/* Efecto hover para cuando el usuario pasa el mouse */
-#btnActualizar:hover {
-    background-color: #0056b3;
-    /* Cambia el color de fondo a un tono más oscuro */
-    transform: scale(1.05);
-    /* Agranda el botón ligeramente */
+/*To add dynanism to the error message*/
+.mensaje-error {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    display: inline-block !important;
+    min-height: 1rem !important;
+    pointer-events: none !important;
 }
+
+.mensaje-error.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.btn-close {
+  filter: invert(1) !important;
+}
+
+

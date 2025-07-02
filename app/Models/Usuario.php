@@ -43,7 +43,8 @@ protected $table = 'usuarios';
         'id_pension',
         'id_arl',
         'id_caj_compen',
-        'id_profesion'
+        'id_profesion',
+        'img_perfil'
     ];
 public function eps(){
     return $this->belongsTo(Eps::class,'id_eps','id_eps');
@@ -55,7 +56,7 @@ public function pensiones(){
 public function arl(){
     return $this->belongsTo(Arl::class,'id_arl','id_arl');
 }
-public function cargo(){
+public function cargos(){
     return $this->belongsTo(Cargo::class,'id_cargo','id_cargo');
 }
 
