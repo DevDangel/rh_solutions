@@ -1,0 +1,6 @@
+git stash // guarda por un momento los cambios en el local
+git stasth pop // libera los cambios NOTA: eestos comando solo se hacen solo antes de un merge por seguirdad
+
+
+// GENERAR Storage link para storage package
+php artisan storage:link
