@@ -1,6 +1,11 @@
 @extends('admin.dashboard')
 
 @section('tite', 'Asignación de Documentos')
+@push('styles')
+
+@endpush
+@section('banner')
+@endsection
 @section('content')
 
 <div class="container mt-4">

@@ -1,5 +1,9 @@
 @extends('admin.dashboard')
+@push('styles')
 
+@endpush
+@section('banner')
+@endsection
 @section('content')
 <div class="container mt-4">
     <h2>Visualización de Documentos de Usuarios</h2>
@@ -31,7 +35,7 @@
                 <tr>
                     <td>{{ $documento->usuario->doc_usuario }}</td>
                     <td>{{ $documento->usuario->pri_nombre }} {{ $documento->usuario->seg_nombre }} {{ $documento->usuario->pri_apellido }} {{ $documento->usuario->seg_apellido}}</td>
-                    <td>{{ $documento->usuario->cargo->cargo }}</td>
+                    <td>{{ $documento->usuario->cargos->cargo }}</td>
                     <td>{{ basename($documento->nom_documento) }}</td>
                     <td>{{ \Carbon\Carbon::parse($documento->created_at)->format('Y-m-d') }}</td>
                     <td>{{ $documento->tipoDocumento->nom_tip_document }}</td>

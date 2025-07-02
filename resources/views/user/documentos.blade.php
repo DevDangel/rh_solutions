@@ -1,5 +1,9 @@
 @extends('user.dashboard')
+@push('styles')
 
+@endpush
+@section('banner')
+@endsection
 @section('content')
 <div class="container">
     <h2 class="mb-4">Mis Documentos</h2>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Arl;
 use App\Models\Usuario;
 use App\Models\Departamento;
@@ -65,7 +66,7 @@ class CrudController extends Controller
                 $request->profesion,
                 $request->registro_profesional,
                 $request->cargo,
-                $request->contraseña,
+                Hash::make($request->contraseña),
                 $request->est_usuario,
                 $request->eps,
                 $request->pension,
