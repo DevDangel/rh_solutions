@@ -17,7 +17,7 @@ php artisan key:generate
 
 php artisan migrate
 
-hacer php artisan storage:link // para crear las rutas 
+hacer: php artisan storage:link // para crear las rutas
 
 ## About Laravel
 
