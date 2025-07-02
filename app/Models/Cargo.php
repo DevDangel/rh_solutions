@@ -24,5 +24,8 @@ class Cargo extends Model
         'id_cargo',
         'cargo',
     ];
+    public function dependencias(){
+    return $this->belongsTo(Dependencia::class,'id_dependencia','id_dependencia');
+}
 }
 

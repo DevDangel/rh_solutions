@@ -61,7 +61,7 @@
                             <div class="collapse ms-5" id="submenuUsuarios">
                                 <ul class="list-unstyled">
                                     <li><a class="nav-link px-0" href="{{route('crud.index')}}"><i class="fas fa-eye me-2"></i> Lista de usuarios</a></li>
-                                    <li><a class="nav-link px-0" href="#"><i class="fas fa-user-plus me-2"></i> Agregar cargo</a></li>
+                                    <li><a class="nav-link px-0" href="{{route('cargos.admin')}}"><i class="fas fa-user-plus me-2"></i> Agregar cargo</a></li>
                                 </ul>
                             </div>
                         </li>

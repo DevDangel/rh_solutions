@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CrudController;
 use App\Http\Controllers\Admin\HistorialController;
 use App\Http\Controllers\Admin\PerfilAdminController;
 use App\Http\Controllers\Admin\SolicitudController;
+use App\Http\Controllers\Admin\CargoController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuarioAuthController;
@@ -125,5 +126,19 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/municipios-admin/{id}', [PerfilAdminController::class, 'municipiosPorDepartamento']);
 
     //-------------------------------------------------------------------------------------------//
+    //-----------------------------------crear cargo---------------------------------------------//
+    //ruta para generar vista de crud
+    Route::get('/cargos', [CargoController::class,'index'])->name( 'cargos.admin');
+    //Ruta para botn crear
+    Route::post('/registrar-cargo', [CargoController::class,'create'])->name( 'GestionarCargo.create');
+    //Ruta para boton actualizar
+    Route::post('/cargos/actualizar/{id}', [CargoController::class,'update'])->name( 'GestionarCargo.update');
+    //Ruta para boton eliminar
+    Route::get('/cargos/{id}/eliminar', [CargoController::class, 'delete'])->name('GestionarCargo.delete');
+    // Ruta para relacionesController
+    //Route::get('/', [ CargoController::class, 'index']);
+    //Ruta paara validar con metodo ajax modal crear y  modal editar
+    Route::post('/validar-campo', [CargoController::class, 'validarCampo'])->name('validar.campo');
+    //------------------------------------------------------------------------------------------//
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

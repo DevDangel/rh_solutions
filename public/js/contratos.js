@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     errorMsg.textContent = 'El número de documento no se encuentra registrado.';
                    // errorMsg.style.display = 'block';
                     errorMsg.classList.add('visible');
-                    nombreInput = '';
-                    apellidoInput = '';
+                    nombreInput.value = '';
+                    apellidoInput.value = '';
                 } else {
                    // errorMsg.style.display = 'none';
                    errorMsg.classList.remove('visible');
